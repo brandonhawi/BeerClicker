@@ -1,0 +1,47 @@
+{
+    "buildings": [{
+            "buildingID": "brewKit",
+            "owned": 0,
+            "beersPerSecond": 0.1,
+            "baseCost": 10,
+            "cost": 10,
+            "growthRate": 1.10,
+            "canPurchase": false,
+            "purchaseText": "Buy a Home Brew Kit",
+            "description": "An at home kit to passively generate beers while you sap on your couch."
+        },
+        {
+            "buildingID": "fellowSapper",
+            "owned": 0,
+            "beersPerSecond": 1,
+            "baseCost": 100,
+            "cost": 100,
+            "growthRate": 1.11,
+            "canPurchase": false,
+            "purchaseText": "Hire a fellow sapper",
+            "description": "This guy says he'll buy you beer, in exchange for beer. Who knew frats were this desperate..."
+        },
+        {
+            "buildingID": "beerTree",
+            "owned": 0,
+            "beersPerSecond": 10,
+            "baseCost": 1000,
+            "cost": 1000,
+            "growthRate": 1.09,
+            "canPurchase": false,
+            "purchaseText": "Plant a Beer Tree",
+            "description": "You dig a hole, pour beers into it, and hope that you have a good rainy season this year."
+        },
+        {
+            "buildingID": "craftBrewery",
+            "owned": 0,
+            "beersPerSecond": 100,
+            "baseCost": 10000,
+            "cost": 10000,
+            "growthRate": 1.07,
+            "canPurchase": false,
+            "purchaseText": "Build a Craft Brewery",
+            "description": "I guess we had to have one normal beer thing in this game."
+        }
+    ]
+}
