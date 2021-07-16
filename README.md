@@ -1,3 +1,8 @@
+# BeerClicker [![Build App](https://github.com/brandonhawi/BeerClicker/actions/workflows/build.yml/badge.svg)](https://github.com/brandonhawi/BeerClicker/actions/workflows/build.yml)
+
+This is an idle game made with React and specifically the [react-game-engine library](https://github.com/bberak/react-game-engine).
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
