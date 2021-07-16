@@ -47,3 +47,5 @@ export default class Game extends PureComponent {
     );
   }
 }
+
+export { Game };

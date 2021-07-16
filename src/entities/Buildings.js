@@ -11,6 +11,7 @@ class Buildings extends React.PureComponent {
             var buildingID = buildings[index].buildingID;
             var currentBuildingRender =
                 <BuildingView
+                    key={buildingID}
                     className={buildingID}
                     owned={this.props[buildingID].owned}
                     beersPerSecond={this.props[buildingID].beersPerSecond}
