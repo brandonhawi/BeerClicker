@@ -20,7 +20,6 @@ jobs:
       - run: npm test
 
       - name: deploy file to server
-        uses: wlixcc/SFTP-Deploy-Action@v1.0
         run: echo ${{ secrets.LINODE_SSH_PRIVATE_KEY }} > privatekey.txt
         run: sftp root@50.116.15.211 -i privatekey.txt
         run: ls
