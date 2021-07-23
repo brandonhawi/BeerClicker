@@ -38,7 +38,7 @@ export default class Game extends PureComponent {
             renderer: <Buildings />
           },
           beerClicker: {
-            totalBeers: 100000,
+            totalBeers: 0,
             totalBeersPerSecond: 0,
             renderer: <BeerClicker />
           }

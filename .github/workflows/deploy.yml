@@ -21,10 +21,6 @@ jobs:
 
       - name: deploy file to server
         uses: wlixcc/SFTP-Deploy-Action@v1.0
-        with:
-          username: 'root'
-          server: '${{ secrets.SERVER_IP }}'
-          ssh_private_key: ${{ secrets.LINODE_SSH_PRIVATE_KEY }}
-          local_path: './build/*'
-          remote_path: '/root/beer-idle-game/'
-          args: '-o ConnectTimeout=5'
+        run: echo ${{ secrets.LINODE_SSH_PRIVATE_KEY }} > privatekey.txt
+        run: sftp root@50.116.15.211 -i privatekey.txt
+        run: ls
