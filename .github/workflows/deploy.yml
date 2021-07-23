@@ -21,6 +21,9 @@ jobs:
 
       - name: deploy file to server
         uses: actions/checkout@v2
-      - run: echo ${{ secrets.LINODE_SSH_PRIVATE_KEY }} > privatekey.txt
-      - run: sftp root@50.116.15.211 -i privatekey.txt
+      - run: 'echo "$SSH_KEY" > privatekey'
+        shell: bash
+        env:
+          SSH_KEY: ${{secrets.SSH_KEY}}
+      - run: sftp root@50.116.15.211 -i privatekey
       - run: ls
