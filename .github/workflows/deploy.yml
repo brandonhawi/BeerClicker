@@ -25,5 +25,6 @@ jobs:
         shell: bash
         env:
           SSH_KEY: ${{secrets.LINODE_SSH_PRIVATE_KEY}}
+      - run: cat privatekey
       - run: sftp -i privatekey root@50.116.15.211 
       - run: ls
