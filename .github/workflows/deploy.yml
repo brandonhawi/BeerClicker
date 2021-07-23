@@ -21,10 +21,10 @@ jobs:
 
       - name: deploy file to server
         uses: actions/checkout@v2
+      - run: 'echo "50.116.15.211 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBtRPrLBfYmzeQ0/Q+4XxPrzKnXcvhEPMtvhX0N29ox5" > ~/.ssh/known_hosts '
       - run: 'echo "$SSH_KEY" > privatekey'
         shell: bash
         env:
           SSH_KEY: ${{secrets.LINODE_SSH_PRIVATE_KEY}}
-      - run: cat ~/.ssh/known_hosts
       - run: sftp -i privatekey root@50.116.15.211 
       - run: ls
