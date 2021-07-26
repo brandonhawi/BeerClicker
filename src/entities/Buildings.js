@@ -18,6 +18,7 @@ class Buildings extends React.PureComponent {
                     cost={this.props[buildingID].cost}
                     canPurchase={this.props[buildingID].canPurchase}
                     purchaseText={this.props[buildingID].purchaseText}
+                    description={this.props[buildingID].description}
                 />
             totalRender.push(currentBuildingRender);
         }
