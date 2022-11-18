@@ -1,5 +1,6 @@
 import buildingsJSON from "./assets/buildings.json";
-
+import toast from 'react-hot-toast';
+import { Icon, Segment, Header } from 'semantic-ui-react';
 // const MoveBox = (entities, { input }) => {
 //     //-- I'm choosing to update the game state (entities) directly for the sake of brevity and simplicity.
 //     //-- There's nothing stopping you from treating the game state as immutable and returning a copy..
@@ -18,6 +19,45 @@ import buildingsJSON from "./assets/buildings.json";
 //     return entities;
 // };
 
+const updateAchievements = (entities) => {
+    // entities.counter.value += 1;
+    // if (Math.floor(entities.counter.value / entities.fps.value) == 10) {
+    //     toast('Test Toast');
+    //     entities.counter.value = 0;
+    // }
+    var achievements = entities.achievements;
+    for (var index in achievements) {
+        //console.log(eval(achievements[index].calculation));
+        //console.log(entities.achievements);
+        //console.log(entities.totalBuildings);
+        if (!entities.achievements[index].earned && eval(achievements[index].calculation)) {
+            toast.custom(
+                <Segment>
+                    <Header as="h3">
+                        <Icon name={achievements[index].iconName}/>
+                        {achievements[index].name}
+                    </Header>
+                    <em>"{achievements[index].hint}"</em>
+                </Segment>
+            );
+            //toast(`${achievements[index].name}: ${achievements[index].hint}`);
+            entities.achievements[index].earned = true;
+        }
+    }
+    return { ...entities };
+};
+
+const updateTotalBuildings = (entities) => {
+    var buildings = entities.buildings;
+    var totalBuildings = 0;
+    for (var index in buildings) {
+        if (index !== "renderer") {
+            totalBuildings += buildings[index].owned;
+        }
+    }
+    return { ...entities, totalBuildings: { value: totalBuildings } };
+};
+
 const updateTotalBeers = (entities, { input }) => {
     const beerClicker = entities.beerClicker;
     var totalBeers = beerClicker.totalBeers;
@@ -26,7 +66,7 @@ const updateTotalBeers = (entities, { input }) => {
         var buildingID = buildings[index].buildingID;
         var building = entities.buildings[buildingID];
         var fps = entities.fps.value;
-        totalBeers = calculateBuildingProfit(building,totalBeers,fps);
+        totalBeers = calculateBuildingProfit(building, totalBeers, fps);
     }
     if (beerWasClicked(input)) {
         totalBeers += 1;
@@ -53,7 +93,8 @@ const updateTotalBeersPerSecond = (entities) => {
 
 const beerWasClicked = (input) => {
     const { payload } = input.find(x => x.name === "onMouseDown") || {};
-    return payload?.target.nearestViewportElement?.className.baseVal === 'beerClicker';
+    return payload?.target.nearestViewportElement?.className.baseVal === 'beerClicker' ||
+        payload?.target.className.baseVal === 'beerClicker';
 };
 
 const getFps = (entities) => {
@@ -112,7 +153,7 @@ const purchaseBuilding = (entities, { input }) => {
                         }
                     }
                 }
-                catch {}
+                catch { }
             }
         }
     }
@@ -128,4 +169,8 @@ function spend(wallet, amountToSpend) {
     return wallet - amountToSpend;
 }
 
-export { getFps, updateCanPurchase, updateTotalBeers, updateTotalBeersPerSecond, purchaseBuilding };
+export {
+    getFps, updateCanPurchase, updateTotalBeers,
+    updateTotalBeersPerSecond, purchaseBuilding,
+    updateTotalBuildings, updateAchievements
+};

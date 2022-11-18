@@ -1,11 +1,11 @@
 import React from "react";
 import { ReactComponent as SVG } from "../beer.svg";
-import { Grid } from "semantic-ui-react";
+import { Container, Grid, GridColumn, GridRow } from "semantic-ui-react";
 import "./BeerClicker.css";
 import { prettyPrintNumber } from "../helpers/prettyPrintNumber";
 
 class BeerClicker extends React.PureComponent {
-    totalBeers(){
+    totalBeers() {
         var beers = this.props.totalBeers;
         beers = Math.floor(beers);
         return prettyPrintNumber(beers);
@@ -18,11 +18,15 @@ class BeerClicker extends React.PureComponent {
     }
 
     render() {
-        return <Grid.Column width={8} className="container">
-                <SVG className="beerClicker"/>
+        return <Grid.Column width={8}>
+            <GridRow style={{height: "80%"}}>
+                <SVG className="beerClicker" viewBox="0 0 120 120" width="100%" height="100%"/>
+            </GridRow>
+            <GridRow style={{height: "20%"}}> 
                 <p>Total Beers: {this.totalBeers()}</p>
                 <p>Beers Per Second: {this.totalBeersPerSecond()}</p>
-            </Grid.Column>
+            </GridRow>
+        </Grid.Column>
     }
 }
 

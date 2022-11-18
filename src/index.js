@@ -4,10 +4,18 @@ import './index.css';
 import Game from './Game';
 import reportWebVitals from './reportWebVitals';
 import 'semantic-ui-css/semantic.min.css'
+import { Toaster } from 'react-hot-toast';
+import { Grid, Menu } from 'semantic-ui-react';
 
 ReactDOM.render(
   <React.StrictMode>
     <Game />
+    <Toaster
+      position="bottom-center"
+      toastOptions={{
+        duration: 6000
+      }}
+    />
     <noscript>You need to enable JavaScript to run this app.</noscript>
   </React.StrictMode>,
   document.getElementById('root')
