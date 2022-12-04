@@ -19,6 +19,15 @@
       "iconName": "chart line"
     },
     {
+      "achievementID": "totalBeers1",
+      "name": "Brewmatics",
+      "earned": false,
+      "description": "Acquire 1,000 lifetime beers.",
+      "hint": "According to my calculations... we have a lot of beer",
+      "calculation": "entities.beerClicker.lifetimeBeers >= 1000",
+      "iconName": "plus icon"
+    },
+    {
       "achievementID": "homeBrewKit1",
       "name": "Party Trick",
       "earned": false,

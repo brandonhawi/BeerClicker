@@ -5,7 +5,6 @@ import Game from './Game';
 import reportWebVitals from './reportWebVitals';
 import 'semantic-ui-css/semantic.min.css'
 import { Toaster } from 'react-hot-toast';
-import { Grid, Menu } from 'semantic-ui-react';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -17,6 +16,9 @@ ReactDOM.render(
       }}
     />
     <noscript>You need to enable JavaScript to run this app.</noscript>
+    <template id="beerClickNumber">
+      <span className="number"></span>
+    </template>
   </React.StrictMode>,
   document.getElementById('root')
 );
