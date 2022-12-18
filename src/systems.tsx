@@ -1,31 +1,15 @@
 import toast from "react-hot-toast";
 import { Icon, Segment, Header } from "semantic-ui-react";
-// const MoveBox = (entities, { input }) => {
-//     //-- I'm choosing to update the game state (entities) directly for the sake of brevity and simplicity.
-//     //-- There's nothing stopping you from treating the game state as immutable and returning a copy..
-//     //-- Example: return { ...entities, t.id: { UPDATED COMPONENTS }};
-//     //-- That said, it's probably worth considering performance implications in either case.
 
-//     const { payload } = input.find(x => x.name === "onMouseDown") || {};
-
-//     if (payload) {
-//         const box1 = entities["box1"];
-
-//         box1.x = payload.pageX;
-//         box1.y = payload.pageY;
-//     }
-
-//     return entities;
-// };
-
-const showBeerClickNumber = (entities, { input }) => {
+export function showBeerClickNumber(entities: any, { input }: { input: any }) {
   if (beerWasClicked(input)) {
-    var element =
-      document.getElementsByTagName("template")[0].firstElementChild;
-    var clone = element.cloneNode(true);
+    var element = (
+      document.getElementsByTagName("template")[0] as HTMLTemplateElement
+    ).firstElementChild! as HTMLSpanElement;
+    var clone = element.cloneNode(true) as HTMLSpanElement;
     var beersPerClick = entities.beersPerClick.value;
     clone.textContent = `+ ${beersPerClick}`;
-    const { payload } = input.find((x) => x.name === "onMouseDown");
+    const { payload } = input.find((x: any) => x.name === "onMouseDown");
     clone.style.position = "absolute";
     clone.style.color = "#f2f2f2";
     clone.style.fontWeight = "800";
@@ -48,16 +32,17 @@ const showBeerClickNumber = (entities, { input }) => {
     });
   }
   return { ...entities };
-};
+}
 
-const updateAchievements = (entities) => {
+export function updateAchievements(entities: any) {
   var achievements = entities.achievements;
+  console.log(achievements);
   for (var index in achievements) {
     if (
       !entities.achievements[index].earned &&
       eval(achievements[index].calculation)
     ) {
-      toast.custom(
+      const achievement = (
         <Segment>
           <Header as="h3">
             <Icon name={achievements[index].iconName} />
@@ -66,6 +51,7 @@ const updateAchievements = (entities) => {
           <em>"{achievements[index].hint}"</em>
         </Segment>
       );
+      toast.custom(achievement);
       entities.achievements[index].earned = true;
       const achievementSound = new Audio("./achievement.wav");
       achievementSound.addEventListener("canplaythrough", (event) => {
@@ -75,27 +61,27 @@ const updateAchievements = (entities) => {
     }
   }
   return { ...entities };
-};
+}
 
-const updateTotalBuildings = (entities) => {
+export function updateTotalBuildings(entities: any) {
   var buildings = entities.buildings;
   var totalBuildings = 0;
-  for (const [buildingID, buildingObj] of Object.entries(buildings)) {
+  for (const [buildingID, buildingObj] of Object.entries<any>(buildings)) {
     if (buildingID !== "renderer") {
       totalBuildings += buildingObj.owned;
     }
   }
   return { ...entities, totalBuildings: { value: totalBuildings } };
-};
+}
 
-const updateTotalBeers = (entities, { input }) => {
+export function updateTotalBeers(entities: any, { input }: { input: any }) {
   const beerClicker = entities.beerClicker;
   var beersGained = 0;
   var totalBeers = beerClicker.totalBeers;
   for (const [buildingID, buildingObj] of Object.entries(entities.buildings)) {
     var fps = entities.fps.value;
     if (buildingID !== "renderer") {
-        beersGained += calculateBuildingProfit(buildingObj, fps);
+      beersGained += calculateBuildingProfit(buildingObj, fps);
     }
   }
   if (beerWasClicked(input)) {
@@ -111,21 +97,20 @@ const updateTotalBeers = (entities, { input }) => {
       lifetimeBeers: lifetimeBeers,
     },
   };
-};
+}
 
-function calculateBuildingProfit(building, fps) {
+export function calculateBuildingProfit(building: any, fps: number) {
   var perSecondProfit = building.owned * building.beersPerSecond;
   var perFrameProfit = perSecondProfit / fps;
   return perFrameProfit;
 }
 
-const updateTotalBeersPerSecond = (entities) => {
+export function updateTotalBeersPerSecond(entities: any) {
   const buildings = entities.buildings;
   var totalBeersPerSecond = 0;
-  for (const [buildingID, buildingObj] of Object.entries(buildings)) {
+  for (const [buildingID, buildingObj] of Object.entries<any>(buildings)) {
     if (buildingID !== "renderer") {
-      totalBeersPerSecond +=
-        buildingObj.owned * buildingObj.beersPerSecond;
+      totalBeersPerSecond += buildingObj.owned * buildingObj.beersPerSecond;
     }
   }
   return {
@@ -135,17 +120,17 @@ const updateTotalBeersPerSecond = (entities) => {
       totalBeersPerSecond: totalBeersPerSecond,
     },
   };
-};
+}
 
-const beerWasClicked = (input) => {
-  const { payload } = input.find((x) => x.name === "onMouseDown") || {};
+export function beerWasClicked(input: any) {
+  const { payload } = input.find((x: any) => x.name === "onMouseDown") || {};
   return (
     payload?.target.nearestViewportElement?.className.baseVal ===
       "beerClicker" || payload?.target.className.baseVal === "beerClicker"
   );
-};
+}
 
-const getFps = (entities) => {
+export function getFps(entities: any) {
   const lastFrameTime = entities.lastFrameTime;
   var thisFrameTime = performance.now();
   var delta = thisFrameTime - lastFrameTime.value; //time passed in milliseconds
@@ -156,13 +141,13 @@ const getFps = (entities) => {
     fps: { value: fps },
     lastFrameTime: { value: thisFrameTime },
   };
-};
+}
 
-const updateCanPurchase = (entities) => {
+export function updateCanPurchase(entities: any) {
   var buildings = entities.buildings;
   var wallet = entities.beerClicker.totalBeers;
-  var newBuildings = {};
-  for (const [buildingID, buildingObj] of Object.entries(buildings)) {
+  var newBuildings: any = {};
+  for (const [buildingID, buildingObj] of Object.entries<any>(buildings)) {
     if (buildingID !== "renderer") {
       var cost = buildingObj.cost;
       if (canPurchase(wallet, cost)) {
@@ -175,19 +160,24 @@ const updateCanPurchase = (entities) => {
     }
   }
   const buildingsObj = JSON.parse(JSON.stringify(newBuildings));
-  return { ...entities, buildings: {...buildingsObj, renderer: buildings.renderer} };
-};
+  return {
+    ...entities,
+    buildings: { ...buildingsObj, renderer: buildings.renderer },
+  };
+}
 
-function canPurchase(wallet, cost) {
+function canPurchase(wallet: number, cost: number) {
   return wallet >= cost;
 }
 
-const purchaseBuilding = (entities, { input }) => {
+export function purchaseBuilding(entities: any, { input }: { input: any }) {
   var wallet = entities.beerClicker.totalBeers;
-  const { payload } = input.find((x) => x.name === "onMouseDown") || {};
+  const { payload } = input.find((x: any) => x.name === "onMouseDown") || {};
   if (payload) {
     for (var pathItem in payload?.nativeEvent?.path) {
-      for (const [buildingID, buildingObj] of Object.entries(entities.buildings)) {
+      for (const [buildingID, buildingObj] of Object.entries<any>(
+        entities.buildings
+      )) {
         try {
           var isFound =
             payload.nativeEvent.path[pathItem]?.className?.search(buildingID);
@@ -213,24 +203,17 @@ const purchaseBuilding = (entities, { input }) => {
     ...entities,
     beerClicker: { ...entities.beerClicker, totalBeers: wallet },
   };
-};
+}
 
-function calculateNextCost(baseCost, growthRate, owned) {
+function calculateNextCost(
+  baseCost: number,
+  growthRate: number,
+  owned: number
+) {
   var nextCost = baseCost * Math.pow(growthRate, owned);
   return nextCost;
 }
 
-function spend(wallet, amountToSpend) {
+function spend(wallet: number, amountToSpend: number) {
   return wallet - amountToSpend;
 }
-
-export {
-  getFps,
-  updateCanPurchase,
-  updateTotalBeers,
-  updateTotalBeersPerSecond,
-  purchaseBuilding,
-  updateTotalBuildings,
-  updateAchievements,
-  showBeerClickNumber,
-};

@@ -1,5 +1,5 @@
 import { Grid, Menu, Popup } from "semantic-ui-react";
-import { prettyPrintNumber } from "../helpers/prettyPrintNumber";
+import prettyPrintNumber from "../helpers/prettyPrintNumber";
 import "./Building.css";
 
 type Props = {

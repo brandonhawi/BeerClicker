@@ -56,7 +56,6 @@ const Game = () => {
         },
         achievements: {
           ...achievementObjects,
-          //renderer: <Achievements />
         },
         // research: {
         //   //

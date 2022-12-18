@@ -1,14 +1,14 @@
 import { ReactComponent as SVG } from "../beer.svg";
 import { Grid, GridRow, Statistic, StatisticGroup } from "semantic-ui-react";
 import "./BeerClicker.css";
-import { prettyPrintNumber } from "../helpers/prettyPrintNumber";
+import prettyPrintNumber from "../helpers/prettyPrintNumber";
 
 type Props = {
   totalBeers?: number;
   totalBeersPerSecond?: number;
 }
 
-const BeerClicker = ({totalBeers, totalBeersPerSecond}: Props) => {
+const BeerClicker = ({totalBeers, totalBeersPerSecond}: Props): JSX.Element => {
   const displayedBeers = prettyPrintNumber(Math.floor(totalBeers!));
   const displayedBPS = prettyPrintNumber(Math.round(totalBeersPerSecond! * 10) / 10);
 
