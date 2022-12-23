@@ -1,40 +1,47 @@
 import { ReactComponent as SVG } from "../beer.svg";
-import { Grid, GridRow, Statistic, StatisticGroup } from "semantic-ui-react";
+import Grid from "@mui/material/Grid";
+import Stack from "@mui/material/Stack";
+import Chip from "@mui/material/Chip";
 import "./BeerClicker.css";
 import prettyPrintNumber from "../helpers/prettyPrintNumber";
 
 type Props = {
   totalBeers?: number;
   totalBeersPerSecond?: number;
-}
+};
 
-const BeerClicker = ({totalBeers, totalBeersPerSecond}: Props): JSX.Element => {
+const BeerClicker = ({
+  totalBeers,
+  totalBeersPerSecond,
+}: Props): JSX.Element => {
   const displayedBeers = prettyPrintNumber(Math.floor(totalBeers!));
-  const displayedBPS = prettyPrintNumber(Math.round(totalBeersPerSecond! * 10) / 10);
+  const displayedBPS = prettyPrintNumber(
+    Math.round(totalBeersPerSecond! * 10) / 10
+  );
 
   return (
-    <Grid.Column width={8}>
-      <GridRow style={{ height: "80%" }}>
+    <Grid container justifyContent={"space-around"}>
+      <Grid container justifyContent="center" sx={{ height: "80%" }}>
         <SVG
           className="beerClicker"
-          viewBox="0 0 120 120"
-          width="100%"
-          height="100%"
+          viewBox="-20 -20 160 160"
+          width="320px"
+          height="320px"
         />
-      </GridRow>
-      <GridRow style={{ height: "20%" }}>
-        <StatisticGroup size="mini" widths="two">
-          <Statistic>
-            <Statistic.Label>Beers</Statistic.Label>
-            <Statistic.Value>{displayedBeers}</Statistic.Value>
-          </Statistic>
-          <Statistic>
-            <Statistic.Label>Beers Per Second</Statistic.Label>
-            <Statistic.Value>{displayedBPS}</Statistic.Value>
-          </Statistic>
-        </StatisticGroup>
-      </GridRow>
-    </Grid.Column>
+      </Grid>
+      <Grid item>
+        <Stack spacing={2}>
+          <Chip label="Beers" />
+          <Chip label={displayedBeers} />
+        </Stack>
+      </Grid>
+      <Grid item>
+        <Stack spacing={2}>
+          <Chip label="Beers Per Second" />
+          <Chip label={displayedBPS} />
+        </Stack>
+      </Grid>
+    </Grid>
   );
 };
 

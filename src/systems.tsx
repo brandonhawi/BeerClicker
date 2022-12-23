@@ -36,7 +36,6 @@ export function showBeerClickNumber(entities: any, { input }: { input: any }) {
 
 export function updateAchievements(entities: any) {
   var achievements = entities.achievements;
-  console.log(achievements);
   for (var index in achievements) {
     if (
       !entities.achievements[index].earned &&

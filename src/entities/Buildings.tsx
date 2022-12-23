@@ -1,8 +1,9 @@
-import { Grid, Menu } from "semantic-ui-react";
+import Drawer from "@mui/material/Drawer";
+import List from "@mui/material/List";
 import BuildingView from "./BuildingView";
 import buildings from "../assets/buildings.json";
 
-const Buildings = (props: {[key: string]: any }) => {
+const Buildings = (props: { [key: string]: any }) => {
   var allBuildingsRender = [];
   for (const [buildingID] of Object.entries(buildings)) {
     var currentBuildingRender = (
@@ -20,11 +21,23 @@ const Buildings = (props: {[key: string]: any }) => {
     allBuildingsRender.push(currentBuildingRender);
   }
   return (
-    <Grid.Column width={4}>
-      <Menu className="ui left vertical menu grid container">
+    <Drawer
+      variant="persistent"
+      anchor="left"
+      open={true}
+      sx={{
+        width: 240,
+        flexShrink: 0,
+        "& .MuiDrawer-paper": {
+          width: 240,
+          boxSizing: "border-box",
+        },
+      }}
+    >
+      <List disablePadding={true} dense={true}>
         {allBuildingsRender}
-      </Menu>
-    </Grid.Column>
+      </List>
+    </Drawer>
   );
 };
 

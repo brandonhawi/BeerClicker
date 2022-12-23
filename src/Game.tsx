@@ -24,7 +24,12 @@ const Game = () => {
 
   return (
     <GameEngine
-      className="gameDiv ui grid container"
+      style={{
+        display: "flex",
+        outline: "none",
+        flex: "",
+        alignItems: "start",
+      }}
       systems={[
         updateCanPurchase,
         getFps,
@@ -63,6 +68,6 @@ const Game = () => {
       }}
     ></GameEngine>
   );
-}
+};
 
 export default Game;

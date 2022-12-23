@@ -1,6 +1,8 @@
-import { Grid, Menu, Popup } from "semantic-ui-react";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import Grid from "@mui/material/Grid";
+import Tooltip from "@mui/material/Tooltip";
 import prettyPrintNumber from "../helpers/prettyPrintNumber";
-import "./Building.css";
 
 type Props = {
   className: string;
@@ -26,25 +28,23 @@ const BuildingView = ({
     return prettyPrintNumber(cost);
   };
   return (
-    <Popup
-      trigger={
-        <Menu.Item as="a" className={className} disabled={!canPurchase}>
-          <Grid.Row>
-            <Grid.Column>
+    <ListItem disablePadding={true}>
+      <Tooltip title={description} placement="right">
+        <ListItemButton disabled={!canPurchase} className={className}>
+          <Grid container direction="column">
+            <Grid item xs={12}>
               {purchaseText} [{beersPerSecond} beers / second]
-            </Grid.Column>
-          </Grid.Row>
-          <Grid.Row className="owned">
-            <Grid.Column>Owned: {prettyPrintNumber(owned)}</Grid.Column>
-          </Grid.Row>
-          <Grid.Row className="cost">
-            <Grid.Column>Cost: {displayedCost()}</Grid.Column>
-          </Grid.Row>
-        </Menu.Item>
-      }
-      content={description}
-      position="right center"
-    />
+            </Grid>
+            <Grid item xs={12}>
+              Cost: {displayedCost()}
+            </Grid>
+            <Grid item xs={12}>
+              Owned: {owned}
+            </Grid>
+          </Grid>
+        </ListItemButton>
+      </Tooltip>
+    </ListItem>
   );
 };
 
