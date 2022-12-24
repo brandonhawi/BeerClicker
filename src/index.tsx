@@ -4,7 +4,7 @@ import "./index.css";
 import Game from "./Game";
 import Box from "@mui/material/Box";
 import { Toaster } from "react-hot-toast";
-import { ThemeProvider } from "@emotion/react";
+import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "./theme";
 
 ReactDOM.render(

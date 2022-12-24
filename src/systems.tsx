@@ -1,5 +1,6 @@
+import { Badge, Paper, Typography } from "@mui/material";
+import SportsBarIcon from "@mui/icons-material/SportsBar";
 import toast from "react-hot-toast";
-import { Icon, Segment, Header } from "semantic-ui-react";
 
 export function showBeerClickNumber(entities: any, { input }: { input: any }) {
   if (beerWasClicked(input)) {
@@ -42,13 +43,15 @@ export function updateAchievements(entities: any) {
       eval(achievements[index].calculation)
     ) {
       const achievement = (
-        <Segment>
-          <Header as="h3">
-            <Icon name={achievements[index].iconName} />
+        <Paper variant="outlined" sx={{ p: 2 }}>
+          <Typography variant="h5">
+            <Badge color="secondary">
+              <SportsBarIcon color="primary" fontSize="large" />
+            </Badge>
             {achievements[index].name}
-          </Header>
-          <em>"{achievements[index].hint}"</em>
-        </Segment>
+          </Typography>
+          <Typography component="em">"{achievements[index].hint}"</Typography>
+        </Paper>
       );
       toast.custom(achievement);
       entities.achievements[index].earned = true;
