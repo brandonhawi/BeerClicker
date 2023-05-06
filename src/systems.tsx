@@ -1,6 +1,7 @@
 import { Badge, Paper, Typography } from "@mui/material";
 import SportsBarIcon from "@mui/icons-material/SportsBar";
 import toast from "react-hot-toast";
+import { BaseSyntheticEvent } from "react";
 
 export function showBeerClickNumber(entities: any, { input }: { input: any }) {
   if (beerWasClicked(input)) {
@@ -36,25 +37,24 @@ export function showBeerClickNumber(entities: any, { input }: { input: any }) {
 }
 
 export function updateAchievements(entities: any) {
-  var achievements = entities.achievements;
-  for (var index in achievements) {
-    if (
-      !entities.achievements[index].earned &&
-      eval(achievements[index].calculation)
-    ) {
+  const achievements = entities.achievements;
+  for (const [achievementId, achievementObj] of Object.entries<any>(
+    achievements
+  )) {
+    if (!achievementObj.earned && eval(achievementObj.calculation)) {
       const achievement = (
-        <Paper variant="outlined" sx={{ p: 2 }}>
+        <Paper variant="outlined" sx={{ p: 2, userSelect: "none" }}>
           <Typography variant="h5">
             <Badge color="secondary">
               <SportsBarIcon color="primary" fontSize="large" />
             </Badge>
-            {achievements[index].name}
+            {achievementObj.name}
           </Typography>
-          <Typography component="em">"{achievements[index].hint}"</Typography>
+          <Typography component="em">"{achievementObj.hint}"</Typography>
         </Paper>
       );
       toast.custom(achievement);
-      entities.achievements[index].earned = true;
+      entities.achievements[achievementId].earned = true;
       const achievementSound = new Audio("./achievement.wav");
       achievementSound.addEventListener("canplaythrough", (event) => {
         /* the audio is now playable; play it if permissions allow */
@@ -174,29 +174,25 @@ function canPurchase(wallet: number, cost: number) {
 
 export function purchaseBuilding(entities: any, { input }: { input: any }) {
   var wallet = entities.beerClicker.totalBeers;
-  const { payload } = input.find((x: any) => x.name === "onMouseDown") || {};
+  const { payload }: { payload: BaseSyntheticEvent } =
+    input.find((x: any) => x.name === "onMouseDown") || {};
   if (payload) {
-    for (var pathItem in payload?.nativeEvent?.path) {
-      for (const [buildingID, buildingObj] of Object.entries<any>(
-        entities.buildings
-      )) {
-        try {
-          var isFound =
-            payload.nativeEvent.path[pathItem]?.className?.search(buildingID);
-          if (isFound && isFound !== -1) {
-            var cost = buildingObj.cost;
-            if (canPurchase(wallet, cost)) {
-              wallet = spend(wallet, cost);
-              buildingObj.owned += 1;
-              buildingObj.cost = calculateNextCost(
-                buildingObj.baseCost,
-                buildingObj.growthRate,
-                buildingObj.owned
-              );
-            }
-          }
-        } catch (error) {
-          console.error(error);
+    for (const [buildingID, buildingObj] of Object.entries<any>(
+      entities.buildings
+    )) {
+      if (
+        payload.target?.classList &&
+        Array.from(payload.target.classList).includes(buildingID)
+      ) {
+        var cost = buildingObj.cost;
+        if (canPurchase(wallet, cost)) {
+          wallet = spend(wallet, cost);
+          buildingObj.owned += 1;
+          buildingObj.cost = calculateNextCost(
+            buildingObj.baseCost,
+            buildingObj.growthRate,
+            buildingObj.owned
+          );
         }
       }
     }

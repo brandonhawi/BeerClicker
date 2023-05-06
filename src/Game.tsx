@@ -12,16 +12,9 @@ import {
 import BeerClicker from "./viewComponents/BeerClicker";
 import Buildings from "./entities/Buildings";
 import buildings from "./assets/buildings.json";
-import achievementsJSON from "./assets/achievements.json";
+import achievements from "./assets/achievements.json";
 
 const Game = () => {
-  const achievements = achievementsJSON["achievements"];
-  const achievementObjects: any = {};
-  for (const index in achievements) {
-    const achievementID = achievements[index].achievementID;
-    achievementObjects[achievementID] = achievements[index];
-  }
-
   return (
     <GameEngine
       style={{
@@ -60,7 +53,7 @@ const Game = () => {
           renderer: <BeerClicker />,
         },
         achievements: {
-          ...achievementObjects,
+          ...achievements,
         },
         // research: {
         //   //

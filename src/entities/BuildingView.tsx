@@ -28,17 +28,17 @@ const BuildingView = ({
     return prettyPrintNumber(cost);
   };
   return (
-    <ListItem disablePadding={true}>
+    <ListItem disablePadding={true} className={className}>
       <Tooltip title={description} placement="right">
         <ListItemButton disabled={!canPurchase} className={className}>
-          <Grid container direction="column">
-            <Grid item xs={12}>
+          <Grid container direction="column" className={className}>
+            <Grid item xs={12} className={className}>
               {purchaseText} [{beersPerSecond} beers / second]
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} className={className}>
               Cost: {displayedCost()}
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} className={className}>
               Owned: {owned}
             </Grid>
           </Grid>
