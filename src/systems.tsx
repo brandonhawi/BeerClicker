@@ -6,21 +6,14 @@ import { Achievement } from "./types/achievement";
 
 export function showBeerClickNumber(entities: any, { input }: { input: any }) {
   if (beerWasClicked(input)) {
-    var element = (
-      document.getElementsByTagName("template")[0] as HTMLTemplateElement
-    ).firstElementChild! as HTMLSpanElement;
-    var clone = element.cloneNode(true) as HTMLSpanElement;
-    var beersPerClick = entities.beersPerClick.value;
+    const element: HTMLSpanElement =
+      document.getElementById("beerClickNumber")!;
+    const clone = element.cloneNode(true) as HTMLSpanElement;
+    const beersPerClick = entities.beersPerClick.value;
     clone.textContent = `+ ${beersPerClick}`;
     const { payload } = input.find((x: any) => x.name === "onMouseDown");
-    clone.style.position = "absolute";
-    clone.style.color = "#f2f2f2";
-    clone.style.fontWeight = "800";
-    clone.style.fontSize = "20px";
-    clone.style.textShadow = "1px 1px 2px black";
     clone.style.left = `${payload.clientX}px`;
     clone.style.top = `${payload.clientY - 25}px`;
-    clone.className = "visible";
     document.body.appendChild(clone);
     setTimeout(() => {
       clone.className = "hidden";
