@@ -6,6 +6,7 @@ import Box from "@mui/material/Box";
 import { Toaster } from "react-hot-toast";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "./theme";
+import BeerClickNumber from "./viewComponents/BeerClickNumber";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -23,9 +24,7 @@ ReactDOM.render(
         }}
       />
       <noscript>You need to enable JavaScript to run this app.</noscript>
-      <template id="beerClickNumber">
-        <span className="number"></span>
-      </template>
+      <BeerClickNumber />
     </ThemeProvider>
   </React.StrictMode>,
   document.getElementById("root")

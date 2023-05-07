@@ -123,7 +123,7 @@ export function updateTotalBeersPerSecond(entities: any) {
   };
 }
 
-export function beerWasClicked(input: any) {
+function beerWasClicked(input: any) {
   const { payload } = input.find((x: any) => x.name === "onMouseDown") || {};
   return (
     payload?.target.nearestViewportElement?.className.baseVal ===
