@@ -7,6 +7,11 @@ export const theme = createTheme({
       dark: "#7d531f",
       light: "#e3ae76",
     },
+    secondary: {
+      main: "#fccc2f",
+      dark: "#b08e20",
+      light: "#fcd658",
+    },
   },
   components: {
     MuiChip: {
