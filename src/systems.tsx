@@ -93,7 +93,7 @@ export function updateTotalBeers(entities: any, { input }: { input: any }) {
   };
 }
 
-export function calculateBuildingProfit(building: any, fps: number) {
+function calculateBuildingProfit(building: any, fps: number) {
   var perSecondProfit = building.owned * building.beersPerSecond;
   var perFrameProfit = perSecondProfit / fps;
   return perFrameProfit;
