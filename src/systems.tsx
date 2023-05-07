@@ -2,6 +2,7 @@ import { Badge, Paper, Typography } from "@mui/material";
 import SportsBarIcon from "@mui/icons-material/SportsBar";
 import toast from "react-hot-toast";
 import { BaseSyntheticEvent } from "react";
+import { Achievement } from "./types/achievement";
 
 export function showBeerClickNumber(entities: any, { input }: { input: any }) {
   if (beerWasClicked(input)) {
@@ -38,9 +39,7 @@ export function showBeerClickNumber(entities: any, { input }: { input: any }) {
 
 export function updateAchievements(entities: any) {
   const achievements = entities.achievements;
-  for (const [achievementId, achievementObj] of Object.entries<any>(
-    achievements
-  )) {
+  for (const achievementObj of Object.values<Achievement>(achievements)) {
     if (!achievementObj.earned && eval(achievementObj.calculation)) {
       const achievement = (
         <Paper variant="outlined" sx={{ p: 2, userSelect: "none" }}>
@@ -54,7 +53,7 @@ export function updateAchievements(entities: any) {
         </Paper>
       );
       toast.custom(achievement);
-      entities.achievements[achievementId].earned = true;
+      achievementObj.earned = true;
       const achievementSound = new Audio("./achievement.wav");
       achievementSound.addEventListener("canplaythrough", (event) => {
         /* the audio is now playable; play it if permissions allow */
