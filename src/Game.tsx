@@ -13,6 +13,7 @@ import BeerClicker from "./viewComponents/BeerClicker";
 import Buildings from "./entities/Buildings";
 import buildings from "./assets/buildings.json";
 import achievements from "./assets/achievements.json";
+import Achievements from "./entities/Achievements";
 
 const Game = () => {
   return (
@@ -54,6 +55,7 @@ const Game = () => {
         },
         achievements: {
           ...achievements,
+          renderer: <Achievements />,
         },
         // research: {
         //   //
