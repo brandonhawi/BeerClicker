@@ -39,7 +39,7 @@
     "purchaseText": "Build a Craft Brewery",
     "description": "I guess we had to have one normal beer thing in this game."
   },
-  "Hopetship": {
+  "hopetship": {
     "owned": 0,
     "beersPerSecond": 1000,
     "baseCost": 100000,
@@ -47,9 +47,9 @@
     "growthRate": 1.000005,
     "canPurchase": false,
     "purchaseText": "Launch a Hopetship!",
-    "description": "Science has advanced to the point where we can fuel rockets with beer now; launch a hopetship to gather hops on new frontiers."
+    "description": "Science has advanced to the point where rockets now use beer as fuel; launch a hopetship to gather hops on new frontiers."
   },
-  "Corporate Offices": {
+  "corporateOffice": {
     "owned": 0,
     "beersPerSecond": 10000,
     "baseCost": 1000000,
