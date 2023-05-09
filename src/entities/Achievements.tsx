@@ -1,6 +1,5 @@
 import {
   AppBar,
-  Box,
   Toolbar,
   IconButton,
   Modal,
@@ -51,13 +50,13 @@ export default function Achievements() {
           <Typography variant="h6">Achievements</Typography>
           <ImageList sx={{ width: 400, height: 450 }} cols={8} rowHeight={50}>
             <ImageListItem>
-              <img src="/beerenomics.png" />
+              <img src="/beerenomics.png" alt="beerenomics achievements" />
             </ImageListItem>
             <ImageListItem>
-              <img src="https://placehold.co/50" />
+              <img src="https://placehold.co/50" alt="placeholder" />
             </ImageListItem>
             <ImageListItem>
-              <img src="https://placehold.co/50" />
+              <img src="https://placehold.co/50" alt="placeholder" />
             </ImageListItem>
           </ImageList>
         </Paper>
