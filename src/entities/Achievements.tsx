@@ -1,39 +1,67 @@
-import { BottomNavigation, BottomNavigationAction, Modal, Paper, Typography, Box } from "@mui/material";
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  IconButton,
+  Modal,
+  Paper,
+  Typography,
+  ImageList,
+  ImageListItem,
+} from "@mui/material";
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 import { useState } from "react";
 
-type navigationOptions = "achievements";
-
 export default function Achievements() {
-  const [currentNavigation, setCurrentNavigation] = useState<navigationOptions>("achievements");
+  const [achievementsShown, setAchievementsShown] = useState(false);
 
   return (
     <>
-    <Paper
-      sx={{ position: "fixed", bottom: 0, left: 240, right: 0 }}
-      elevation={4}
-    >
-      <BottomNavigation
-        value={currentNavigation}
-        onChange={(_event, newValue) => {
-          setCurrentNavigation(newValue);
-        }}
-        sx={{ padding: 1}}
+      <AppBar
+        position="fixed"
+        color="primary"
+        sx={{ top: "auto", bottom: 0, left: 240 }}
       >
-        <BottomNavigationAction
-          label={<Typography>Achievements</Typography>}
-          value="achievements"
-          icon={<EmojiEventsIcon fontSize="large"/>}
-        />
-      </BottomNavigation>
-    </Paper>
-    {/* <Modal
-      open={currentNavigation === "achievements"}
-    >
-      <Box>
-        <Typography>Test Achievements</Typography>
-      </Box>
-    </Modal> */}
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="achievements"
+            onClick={() => {
+              setAchievementsShown(!achievementsShown);
+            }}
+          >
+            <EmojiEventsIcon />
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+      <Modal
+        open={achievementsShown}
+        onClose={() => setAchievementsShown(false)}
+      >
+        <Paper
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 400,
+            padding: 2,
+          }}
+        >
+          <Typography variant="h6">Achievements</Typography>
+          <ImageList sx={{ width: 400, height: 450 }} cols={8} rowHeight={50}>
+            <ImageListItem>
+              <img src="/beerenomics.png" />
+            </ImageListItem>
+            <ImageListItem>
+              <img src="https://placehold.co/50" />
+            </ImageListItem>
+            <ImageListItem>
+              <img src="https://placehold.co/50" />
+            </ImageListItem>
+          </ImageList>
+        </Paper>
+      </Modal>
     </>
   );
 }
