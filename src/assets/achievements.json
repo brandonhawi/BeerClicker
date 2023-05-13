@@ -28,7 +28,7 @@
     "earned": false,
     "description": "Purchase your first Home Brew Kit.",
     "hint": "Give a man a beer, he'll waste an hour. Teach him to home brew, he'll waste a lifetime.",
-    "calculation": "entities.buildings.brewKit.owned >= 1",
+    "calculation": "entities.buildings.buildings.buildingData.get(\"brewKit\").owned >= 1",
     "iconName": "clock outline"
   },
   "fellowSapper1": {
@@ -36,7 +36,7 @@
     "earned": false,
     "description": "Hire your first Fellow Sapper.",
     "hint": "Hi, my name's Chad",
-    "calculation": "entities.buildings.fellowSapper.owned >= 1",
+    "calculation": "entities.buildings.buildings.buildingData.get(\"fellowSapper\").owned >= 1",
     "iconName": "caret square up"
   },
   "beerTree1": {
@@ -44,7 +44,7 @@
     "earned": false,
     "description": "Plant your first Beer Tree.",
     "hint": "Sowing the seeds of a cool Natural Light.",
-    "calculation": "entities.buildings.beerTree.owned >= 1",
+    "calculation": "entities.buildings.buildings.buildingData.get(\"beerTree\").owned >= 1",
     "iconName": "tree"
   }
 }

@@ -49,13 +49,12 @@ export function updateAchievements(entities: any) {
 }
 
 export function updateTotalBuildings(entities: any) {
-  const buildings = Object.entries<Building>(entities.buildings)
-    .filter(([id]) => id !== "renderer")
-    .map(([, obj]) => obj);
   let totalBuildings = 0;
-  for (const buildingObj of buildings) {
-    totalBuildings += buildingObj.owned;
-  }
+  const buildingData: Map<string, Building> =
+    entities.buildings.buildings.buildingData;
+  buildingData.forEach((building) => {
+    totalBuildings += building.owned;
+  });
   return { ...entities, totalBuildings: { value: totalBuildings } };
 }
 
@@ -63,13 +62,12 @@ export function updateTotalBeers(entities: any, { input }: { input: any }) {
   const beerClicker = entities.beerClicker;
   let beersGained = 0;
   let totalBeers = beerClicker.totalBeers;
-  const buildings = Object.entries<Building>(entities.buildings)
-    .filter(([id]) => id !== "renderer")
-    .map(([, obj]) => obj);
-  for (const buildingObj of buildings) {
+  const buildingData: Map<string, Building> =
+    entities.buildings.buildings.buildingData;
+  buildingData.forEach((building) => {
     const fps = entities.fps.value;
-    beersGained += calculateBuildingProfit(buildingObj, fps);
-  }
+    beersGained += calculateBuildingProfit(building, fps);
+  });
   if (beerWasClicked(input)) {
     beersGained += entities.beersPerClick.value;
   }
@@ -93,12 +91,11 @@ function calculateBuildingProfit(building: any, fps: number) {
 
 export function updateTotalBeersPerSecond(entities: any) {
   let totalBeersPerSecond = 0;
-  const buildings = Object.entries<Building>(entities.buildings)
-    .filter(([id]) => id !== "renderer")
-    .map(([, obj]) => obj);
-  for (const buildingObj of buildings) {
-    totalBeersPerSecond += buildingObj.owned * buildingObj.beersPerSecond;
-  }
+  const buildingData: Map<string, Building> =
+    entities.buildings.buildings.buildingData;
+  buildingData.forEach(({ owned, beersPerSecond }) => {
+    totalBeersPerSecond += owned * beersPerSecond;
+  });
   return {
     ...entities,
     beerClicker: {
@@ -130,25 +127,25 @@ export function getFps(entities: any) {
 }
 
 export function updateCanPurchase(entities: any) {
-  const buildings = entities.buildings;
   const wallet = entities.beerClicker.totalBeers;
-  const newBuildings: any = {};
-  for (const [buildingID, buildingObj] of Object.entries<any>(buildings).filter(
-    ([id]) => id !== "renderer"
-  )) {
-    const cost = buildingObj.cost;
-    if (canPurchase(wallet, cost)) {
-      buildingObj.canPurchase = true;
-      newBuildings[buildingID] = buildingObj;
+  const newBuildings: Map<string, Building> = new Map();
+  const buildingData: Map<string, Building> =
+    entities.buildings.buildings.buildingData;
+  buildingData.forEach((building, buildingId) => {
+    if (canPurchase(wallet, building.cost)) {
+      building.canPurchase = true;
+      newBuildings.set(buildingId, building);
     } else {
-      buildingObj.canPurchase = false;
-      newBuildings[buildingID] = buildingObj;
+      building.canPurchase = false;
+      newBuildings.set(buildingId, building);
     }
-  }
-  const buildingsObj = JSON.parse(JSON.stringify(newBuildings));
+  });
   return {
     ...entities,
-    buildings: { ...buildingsObj, renderer: buildings.renderer },
+    buildings: {
+      buildings: { buildingData: newBuildings },
+      renderer: entities.buildings.renderer,
+    },
   };
 }
 
@@ -161,29 +158,38 @@ export function purchaseBuilding(entities: any, { input }: { input: any }) {
   const { payload }: { payload: BaseSyntheticEvent } =
     input.find((x: any) => x.name === "onMouseDown") || {};
   if (payload) {
-    for (const [buildingID, buildingObj] of Object.entries<any>(
-      entities.buildings
-    )) {
+    const buildingData: Map<string, Building> =
+      entities.buildings.buildings.buildingData;
+    const newBuildings: Map<string, Building> = new Map();
+    buildingData.forEach((building, buildingId) => {
       if (
         payload.target?.classList &&
-        Array.from(payload.target.classList).includes(buildingID)
+        Array.from(payload.target.classList).includes(buildingId)
       ) {
-        const cost = buildingObj.cost;
-        if (canPurchase(wallet, cost)) {
-          wallet = spend(wallet, cost);
-          buildingObj.owned += 1;
-          buildingObj.cost = calculateNextCost(
-            buildingObj.baseCost,
-            buildingObj.growthRate,
-            buildingObj.owned
+        if (canPurchase(wallet, building.cost)) {
+          wallet = spend(wallet, building.cost);
+          building.owned += 1;
+          building.cost = calculateNextCost(
+            building.baseCost,
+            building.growthRate,
+            building.owned
           );
         }
       }
-    }
+      newBuildings.set(buildingId, building);
+    });
+    return {
+      ...entities,
+      buildings: {
+        buildings: { buildingData: newBuildings },
+        renderer: entities.buildings.renderer,
+      },
+      beerClicker: { ...entities.beerClicker, totalBeers: wallet },
+    };
   }
+
   return {
     ...entities,
-    beerClicker: { ...entities.beerClicker, totalBeers: wallet },
   };
 }
 

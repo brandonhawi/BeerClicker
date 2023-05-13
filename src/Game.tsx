@@ -11,7 +11,7 @@ import {
 } from "./systems";
 import BeerClicker from "./viewComponents/BeerClicker";
 import Buildings from "./entities/Buildings";
-import buildings from "./assets/buildings.json";
+import buildingData from "./assets/buildings";
 import achievements from "./assets/achievements.json";
 import Achievements from "./entities/Achievements";
 
@@ -44,7 +44,7 @@ const Game = () => {
         fps: { value: 60 },
         totalBuildings: { value: 0 },
         buildings: {
-          ...buildings,
+          buildings: { buildingData },
           renderer: <Buildings />,
         },
         beerClicker: {
