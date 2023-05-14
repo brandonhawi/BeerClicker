@@ -1,6 +1,5 @@
 import toast from "react-hot-toast";
 import { MouseEvent } from "react";
-import { Achievement } from "./types/achievement";
 import AchievementView from "./viewComponents/Achievement";
 import { Building } from "./types/building";
 import { entities } from "./types/entities";
@@ -11,8 +10,7 @@ export function showBeerClickNumber(
   { input }: { input: input[] }
 ) {
   if (beerWasClicked(input)) {
-    const element: HTMLSpanElement =
-      document.getElementById("beerClickNumber")!;
+    const element = document.getElementById("beerClickNumber")!;
     const clone = element.cloneNode(true) as HTMLSpanElement;
     const beersPerClick = entities.beersPerClick.value;
     clone.textContent = `+ ${beersPerClick}`;
@@ -37,8 +35,7 @@ export function showBeerClickNumber(
 }
 
 export function updateAchievements(entities: entities) {
-  const achievementData: Map<string, Achievement> =
-    entities.achievements.achievements.achievementData;
+  const achievementData = entities.achievements.achievements.achievementData;
   achievementData.forEach(
     ({ earned, calculation, name, hint }, achievementId) => {
       if (!earned && eval(calculation)) {
@@ -58,8 +55,7 @@ export function updateAchievements(entities: entities) {
 
 export function updateTotalBuildings(entities: entities) {
   let totalBuildings = 0;
-  const buildingData: Map<string, Building> =
-    entities.buildings.buildings.buildingData;
+  const buildingData = entities.buildings.buildings.buildingData;
   buildingData.forEach((building) => {
     totalBuildings += building.owned;
   });
@@ -73,8 +69,7 @@ export function updateTotalBeers(
   const beerClicker = entities.beerClicker;
   let beersGained = 0;
   let totalBeers = beerClicker.totalBeers;
-  const buildingData: Map<string, Building> =
-    entities.buildings.buildings.buildingData;
+  const buildingData = entities.buildings.buildings.buildingData;
   buildingData.forEach((building) => {
     const fps = entities.fps.value;
     beersGained += calculateBuildingProfit(building, fps);
@@ -102,8 +97,7 @@ function calculateBuildingProfit(building: Building, fps: number) {
 
 export function updateTotalBeersPerSecond(entities: entities) {
   let totalBeersPerSecond = 0;
-  const buildingData: Map<string, Building> =
-    entities.buildings.buildings.buildingData;
+  const buildingData = entities.buildings.buildings.buildingData;
   buildingData.forEach(({ owned, beersPerSecond }) => {
     totalBeersPerSecond += owned * beersPerSecond;
   });
@@ -140,8 +134,7 @@ export function getFps(entities: entities) {
 export function updateCanPurchase(entities: entities) {
   const wallet = entities.beerClicker.totalBeers;
   const newBuildings: Map<string, Building> = new Map();
-  const buildingData: Map<string, Building> =
-    entities.buildings.buildings.buildingData;
+  const buildingData = entities.buildings.buildings.buildingData;
   buildingData.forEach((building, buildingId) => {
     if (canPurchase(wallet, building.cost)) {
       building.canPurchase = true;
@@ -171,8 +164,7 @@ export function purchaseBuilding(
   let wallet = entities.beerClicker.totalBeers;
   const { payload } = input.find((x) => x.name === "onMouseDown") || {};
   if (payload) {
-    const buildingData: Map<string, Building> =
-      entities.buildings.buildings.buildingData;
+    const buildingData = entities.buildings.buildings.buildingData;
     const newBuildings: Map<string, Building> = new Map();
     buildingData.forEach((building, buildingId) => {
       if (
