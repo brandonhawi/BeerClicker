@@ -31,20 +31,22 @@ export function showBeerClickNumber(entities: any, { input }: { input: any }) {
 }
 
 export function updateAchievements(entities: any) {
-  const achievements = Object.entries<Achievement>(entities.achievements)
-    .filter(([id]) => id !== "renderer")
-    .map(([, obj]) => obj);
-  for (const achievementObj of achievements) {
-    if (!achievementObj.earned && eval(achievementObj.calculation)) {
-      toast.custom(<AchievementView {...achievementObj} />);
-      achievementObj.earned = true;
-      const achievementSound = new Audio("./achievement.wav");
-      achievementSound.addEventListener("canplaythrough", (event) => {
-        /* the audio is now playable; play it if permissions allow */
-        achievementSound.play();
-      });
+  const achievementData: Map<string, Achievement> =
+    entities.achievements.achievements.achievementData;
+  achievementData.forEach(
+    ({ earned, calculation, name, hint }, achievementId) => {
+      if (!earned && eval(calculation)) {
+        toast.custom(<AchievementView hint={hint} name={name} />);
+        const achievement = achievementData.get(achievementId);
+        if (achievement) achievement.earned = true;
+        const achievementSound = new Audio("./achievement.wav");
+        achievementSound.addEventListener("canplaythrough", (event) => {
+          /* the audio is now playable; play it if permissions allow */
+          achievementSound.play();
+        });
+      }
     }
-  }
+  );
   return { ...entities };
 }
 

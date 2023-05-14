@@ -12,8 +12,8 @@ import {
 import BeerClicker from "./viewComponents/BeerClicker";
 import Buildings from "./entities/Buildings";
 import buildingData from "./assets/buildings";
-import achievements from "./assets/achievements.json";
 import Achievements from "./entities/Achievements";
+import achievementData from "./assets/achievements";
 
 const Game = () => {
   return (
@@ -54,7 +54,7 @@ const Game = () => {
           renderer: <BeerClicker />,
         },
         achievements: {
-          ...achievements,
+          achievements: { achievementData },
           renderer: <Achievements />,
         },
         // research: {
