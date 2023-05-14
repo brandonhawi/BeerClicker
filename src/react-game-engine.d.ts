@@ -1,8 +1,8 @@
 declare module "react-game-engine" {
-  export type GameEngineProps = {
+  export type GameEngineProps<EntityType> = {
     className?: string;
-    systems: { (entities: any, {input: any}?): any }[];
-    entities: {} | Promise<{}>;
+    systems: { (entities: EntityType, { input: any }?): any }[];
+    entities: EntityType;
     renderer?: { (entities, screen): void };
     timer?: {};
     running?: boolean;
@@ -11,5 +11,5 @@ declare module "react-game-engine" {
     children?: JSX.Element;
   };
 
-  export function GameEngine(props: GameEngineProps);
+  export function GameEngine<EntityType>(props: GameEngineProps<EntityType>);
 }

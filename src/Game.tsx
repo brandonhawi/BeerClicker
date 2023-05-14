@@ -14,10 +14,11 @@ import Buildings from "./entities/Buildings";
 import buildingData from "./assets/buildings";
 import Achievements from "./entities/Achievements";
 import achievementData from "./assets/achievements";
+import { entities } from "./types/entities";
 
 const Game = () => {
   return (
-    <GameEngine
+    <GameEngine<entities>
       style={{
         display: "flex",
         outline: "none",
