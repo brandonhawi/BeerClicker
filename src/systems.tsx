@@ -1,17 +1,23 @@
 import toast from "react-hot-toast";
-import { BaseSyntheticEvent } from "react";
+import { MouseEvent } from "react";
 import { Achievement } from "./types/achievement";
 import AchievementView from "./viewComponents/Achievement";
 import { Building } from "./types/building";
+import { entities } from "./types/entities";
+import { input } from "./types/input";
 
-export function showBeerClickNumber(entities: any, { input }: { input: any }) {
+export function showBeerClickNumber(
+  entities: entities,
+  { input }: { input: input[] }
+) {
   if (beerWasClicked(input)) {
     const element: HTMLSpanElement =
       document.getElementById("beerClickNumber")!;
     const clone = element.cloneNode(true) as HTMLSpanElement;
     const beersPerClick = entities.beersPerClick.value;
     clone.textContent = `+ ${beersPerClick}`;
-    const { payload } = input.find((x: any) => x.name === "onMouseDown");
+    const inputPayload = input.find((x) => x.name === "onMouseDown")!;
+    const payload = inputPayload.payload as MouseEvent;
     clone.style.left = `${payload.clientX}px`;
     clone.style.top = `${payload.clientY - 25}px`;
     document.body.appendChild(clone);
@@ -30,7 +36,7 @@ export function showBeerClickNumber(entities: any, { input }: { input: any }) {
   return { ...entities };
 }
 
-export function updateAchievements(entities: any) {
+export function updateAchievements(entities: entities) {
   const achievementData: Map<string, Achievement> =
     entities.achievements.achievements.achievementData;
   achievementData.forEach(
@@ -50,7 +56,7 @@ export function updateAchievements(entities: any) {
   return { ...entities };
 }
 
-export function updateTotalBuildings(entities: any) {
+export function updateTotalBuildings(entities: entities) {
   let totalBuildings = 0;
   const buildingData: Map<string, Building> =
     entities.buildings.buildings.buildingData;
@@ -60,7 +66,10 @@ export function updateTotalBuildings(entities: any) {
   return { ...entities, totalBuildings: { value: totalBuildings } };
 }
 
-export function updateTotalBeers(entities: any, { input }: { input: any }) {
+export function updateTotalBeers(
+  entities: entities,
+  { input }: { input: input[] }
+) {
   const beerClicker = entities.beerClicker;
   let beersGained = 0;
   let totalBeers = beerClicker.totalBeers;
@@ -85,13 +94,13 @@ export function updateTotalBeers(entities: any, { input }: { input: any }) {
   };
 }
 
-function calculateBuildingProfit(building: any, fps: number) {
+function calculateBuildingProfit(building: Building, fps: number) {
   const perSecondProfit = building.owned * building.beersPerSecond;
   const perFrameProfit = perSecondProfit / fps;
   return perFrameProfit;
 }
 
-export function updateTotalBeersPerSecond(entities: any) {
+export function updateTotalBeersPerSecond(entities: entities) {
   let totalBeersPerSecond = 0;
   const buildingData: Map<string, Building> =
     entities.buildings.buildings.buildingData;
@@ -107,15 +116,15 @@ export function updateTotalBeersPerSecond(entities: any) {
   };
 }
 
-function beerWasClicked(input: any) {
-  const { payload } = input.find((x: any) => x.name === "onMouseDown") || {};
+function beerWasClicked(input: input[]) {
+  const { payload } = input.find((x) => x.name === "onMouseDown") || {};
   return (
     payload?.target.nearestViewportElement?.className.baseVal ===
       "beerClicker" || payload?.target.className.baseVal === "beerClicker"
   );
 }
 
-export function getFps(entities: any) {
+export function getFps(entities: entities) {
   const lastFrameTime = entities.lastFrameTime;
   const thisFrameTime = performance.now();
   const delta = thisFrameTime - lastFrameTime.value; //time passed in milliseconds
@@ -128,7 +137,7 @@ export function getFps(entities: any) {
   };
 }
 
-export function updateCanPurchase(entities: any) {
+export function updateCanPurchase(entities: entities) {
   const wallet = entities.beerClicker.totalBeers;
   const newBuildings: Map<string, Building> = new Map();
   const buildingData: Map<string, Building> =
@@ -155,10 +164,12 @@ function canPurchase(wallet: number, cost: number) {
   return wallet >= cost;
 }
 
-export function purchaseBuilding(entities: any, { input }: { input: any }) {
+export function purchaseBuilding(
+  entities: entities,
+  { input }: { input: input[] }
+) {
   let wallet = entities.beerClicker.totalBeers;
-  const { payload }: { payload: BaseSyntheticEvent } =
-    input.find((x: any) => x.name === "onMouseDown") || {};
+  const { payload } = input.find((x) => x.name === "onMouseDown") || {};
   if (payload) {
     const buildingData: Map<string, Building> =
       entities.buildings.buildings.buildingData;
