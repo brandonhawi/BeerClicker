@@ -1,4 +1,5 @@
 import { Achievement } from "../types/achievement";
+import { entities } from "../types/entities";
 
 const achievementData: Map<string, Achievement> = new Map([
   [
@@ -8,7 +9,8 @@ const achievementData: Map<string, Achievement> = new Map([
       earned: false,
       description: "Purchase your first building.",
       hint: "Beer makes the world go round.",
-      calculation: "entities.totalBuildings.value >= 1",
+      calculateEarned: (entities: entities) =>
+        entities.totalBuildings.value >= 1,
     },
   ],
   [
@@ -18,7 +20,8 @@ const achievementData: Map<string, Achievement> = new Map([
       earned: false,
       description: "Purchase your 10th building.",
       hint: "Wealth is in the mind not the pocket.... but what about beer?",
-      calculation: "entities.totalBuildings.value >= 10",
+      calculateEarned: (entities: entities) =>
+        entities.totalBuildings.value >= 10,
     },
   ],
   [
@@ -28,7 +31,8 @@ const achievementData: Map<string, Achievement> = new Map([
       earned: false,
       description: "Acquire 1,000 lifetime beers.",
       hint: "According to my calculations... we have a lot of beer",
-      calculation: "entities.beerClicker.lifetimeBeers >= 1000",
+      calculateEarned: (entities: entities) =>
+        entities.beerClicker.lifetimeBeers >= 1000,
     },
   ],
   [
@@ -38,8 +42,11 @@ const achievementData: Map<string, Achievement> = new Map([
       earned: false,
       description: "Purchase your first Home Brew Kit.",
       hint: "Give a man a beer, he'll waste an hour. Teach him to home brew, he'll waste a lifetime.",
-      calculation:
-        'entities.buildings.buildings.buildingData.get("brewKit").owned >= 1',
+      calculateEarned: (entities: entities) => {
+        const brewKit =
+          entities.buildings.buildings.buildingData.get("brewKit");
+        return brewKit ? brewKit.owned >= 1 : false;
+      },
     },
   ],
   [
@@ -49,8 +56,11 @@ const achievementData: Map<string, Achievement> = new Map([
       earned: false,
       description: "Hire your first Fellow Sapper.",
       hint: "Hi, my name's Chad",
-      calculation:
-        'entities.buildings.buildings.buildingData.get("fellowSapper").owned >= 1',
+      calculateEarned: (entities: entities) => {
+        const fellowSapper =
+          entities.buildings.buildings.buildingData.get("fellowSapper");
+        return fellowSapper ? fellowSapper.owned >= 1 : false;
+      },
     },
   ],
   [
@@ -60,8 +70,11 @@ const achievementData: Map<string, Achievement> = new Map([
       earned: false,
       description: "Plant your first Beer Tree.",
       hint: "Sowing the seeds of a cool Natural Light.",
-      calculation:
-        'entities.buildings.buildings.buildingData.get("beerTree").owned >= 1',
+      calculateEarned: (entities: entities) => {
+        const beerTree =
+          entities.buildings.buildings.buildingData.get("beerTree");
+        return beerTree ? beerTree.owned >= 1 : false;
+      },
     },
   ],
 ]);

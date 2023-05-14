@@ -8,7 +8,6 @@ import {
   ImageList,
   ImageListItem,
   Tooltip,
-  ImageListItemBar,
 } from "@mui/material";
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 import { useState } from "react";

@@ -37,8 +37,8 @@ export function showBeerClickNumber(
 export function updateAchievements(entities: entities) {
   const achievementData = entities.achievements.achievements.achievementData;
   achievementData.forEach(
-    ({ earned, calculation, name, hint }, achievementId) => {
-      if (!earned && eval(calculation)) {
+    ({ earned, calculateEarned, name, hint }, achievementId) => {
+      if (!earned && calculateEarned(entities)) {
         toast.custom(<AchievementView hint={hint} name={name} />);
         const achievement = achievementData.get(achievementId);
         if (achievement) achievement.earned = true;
