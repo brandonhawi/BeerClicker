@@ -4,5 +4,4 @@ export type Achievement = {
   description: string;
   hint: string;
   calculation: string;
-  iconName: string;
 };
