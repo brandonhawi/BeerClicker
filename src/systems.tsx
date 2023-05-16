@@ -4,6 +4,34 @@ import AchievementView from "./viewComponents/Achievement";
 import { Building } from "./types/building";
 import { entities } from "./types/entities";
 import { input } from "./types/input";
+import { researchBuilding } from "./types/research";
+
+export function updateTotalHops(entities: entities) {
+  const research = entities.research.research;
+  let hopsGained = 0;
+  research.researchBuildings.forEach((researchBuilding) => {
+    hopsGained += calculatePerFrameResearchProfit(
+      researchBuilding,
+      entities.fps.value
+    );
+  });
+  research.lifetimeHops += hopsGained;
+  research.totalHops += hopsGained;
+  return { ...entities };
+}
+
+export function updateCanPurchaseResearchBuilding(entities: entities) {
+  const researchBuildings = entities.research.research.researchBuildings;
+  researchBuildings.forEach((researchBuilding) => {
+    if (
+      !researchBuilding.canPurchase &&
+      researchBuilding.calculateCanPurchase(entities)
+    ) {
+      researchBuilding.canPurchase = true;
+    }
+  });
+  return { ...entities };
+}
 
 export function showBeerClickNumber(
   entities: entities,
@@ -95,6 +123,15 @@ function calculateBuildingProfit(building: Building, fps: number) {
   return perFrameProfit;
 }
 
+function calculatePerFrameResearchProfit(
+  researchBuilding: researchBuilding,
+  fps: number
+) {
+  const perSecondProfit =
+    researchBuilding.owned * researchBuilding.hopsPerSecond;
+  return perSecondProfit / fps;
+}
+
 export function updateTotalBeersPerSecond(entities: entities) {
   let totalBeersPerSecond = 0;
   const buildingData = entities.buildings.buildings.buildingData;
@@ -106,6 +143,24 @@ export function updateTotalBeersPerSecond(entities: entities) {
     beerClicker: {
       ...entities.beerClicker,
       totalBeersPerSecond: totalBeersPerSecond,
+    },
+  };
+}
+
+export function updateTotalHopsPerSecond(entities: entities) {
+  let totalHopsPerSecond = 0;
+  const researchBuildings = entities.research.research.researchBuildings;
+  researchBuildings.forEach(({ owned, hopsPerSecond }) => {
+    totalHopsPerSecond += owned * hopsPerSecond;
+  });
+  return {
+    ...entities,
+    research: {
+      ...entities.research,
+      research: {
+        ...entities.research.research,
+        totalHopsPerSecond,
+      },
     },
   };
 }
@@ -188,6 +243,50 @@ export function purchaseBuilding(
       buildings: {
         buildings: { buildingData: newBuildings },
         renderer: entities.buildings.renderer,
+      },
+      beerClicker: { ...entities.beerClicker, totalBeers: wallet },
+    };
+  }
+
+  return {
+    ...entities,
+  };
+}
+
+export function purchaseResearchBuilding(
+  entities: entities,
+  { input }: { input: input[] }
+) {
+  let wallet = entities.beerClicker.totalBeers;
+  const { payload } = input.find((x) => x.name === "onMouseDown") || {};
+  if (payload) {
+    const researchBuildings = entities.research.research.researchBuildings;
+    const newBuildings: Map<string, researchBuilding> = new Map();
+    researchBuildings.forEach((researchBuilding, researchBuildingId) => {
+      if (
+        payload.target?.classList &&
+        Array.from(payload.target.classList).includes(researchBuildingId)
+      ) {
+        if (canPurchase(wallet, researchBuilding.cost)) {
+          wallet = spend(wallet, researchBuilding.cost);
+          researchBuilding.owned += 1;
+          researchBuilding.cost = calculateNextCost(
+            researchBuilding.baseCost,
+            researchBuilding.growthRate,
+            researchBuilding.owned
+          );
+        }
+      }
+      newBuildings.set(researchBuildingId, researchBuilding);
+    });
+    return {
+      ...entities,
+      research: {
+        ...entities.research,
+        research: {
+          ...entities.research.research,
+          researchBuildings: newBuildings,
+        },
       },
       beerClicker: { ...entities.beerClicker, totalBeers: wallet },
     };

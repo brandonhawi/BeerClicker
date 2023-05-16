@@ -8,6 +8,10 @@ import {
   updateTotalBuildings,
   updateAchievements,
   showBeerClickNumber,
+  updateCanPurchaseResearchBuilding,
+  updateTotalHops,
+  purchaseResearchBuilding,
+  updateTotalHopsPerSecond,
 } from "./systems";
 import BeerClicker from "./viewComponents/BeerClicker";
 import Buildings from "./entities/Buildings";
@@ -16,6 +20,8 @@ import Achievements from "./entities/Achievements";
 import achievementData from "./assets/achievements";
 import { entities } from "./types/entities";
 import { input } from "./types/input";
+import researchBuildings from "./assets/researchBuildings";
+import Research from "./entities/Research";
 
 const Game = () => {
   return (
@@ -27,20 +33,25 @@ const Game = () => {
         alignItems: "start",
       }}
       systems={[
+        updateTotalHops,
         updateCanPurchase,
         getFps,
         updateTotalBeers,
         updateTotalBeersPerSecond,
+        updateTotalHopsPerSecond,
         purchaseBuilding,
+        purchaseResearchBuilding,
         updateTotalBuildings,
         updateAchievements,
         showBeerClickNumber,
+        updateCanPurchaseResearchBuilding,
       ]}
       entities={{
         //-- Notice that each entity has a unique id (required)
         //-- and a renderer property (optional). If no renderer
         //-- is supplied with the entity - it won't get displayed.
         beersPerSecond: { value: 0 },
+        hopsPerSecond: { value: 0 },
         beersPerClick: { value: 1 },
         lastFrameTime: { value: performance.now() },
         fps: { value: 60 },
@@ -59,9 +70,15 @@ const Game = () => {
           achievements: { achievementData },
           renderer: <Achievements />,
         },
-        // research: {
-        //   //
-        // }
+        research: {
+          research: {
+            researchBuildings,
+            totalHops: 0,
+            lifetimeHops: 0,
+            totalHopsPerSecond: 0,
+          },
+          renderer: <Research />,
+        },
       }}
     />
   );

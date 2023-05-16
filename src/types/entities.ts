@@ -1,8 +1,12 @@
 import { Achievement } from "./achievement";
 import { Building } from "./building";
+import { researchBuilding } from "./research";
 
 export type entities = {
   beersPerSecond: {
+    value: number;
+  };
+  hopsPerSecond: {
     value: number;
   };
   beersPerClick: {
@@ -32,6 +36,15 @@ export type entities = {
   achievements: {
     achievements: {
       achievementData: Map<string, Achievement>;
+    };
+    renderer: JSX.Element;
+  };
+  research: {
+    research: {
+      researchBuildings: Map<string, researchBuilding>;
+      totalHops: number;
+      lifetimeHops: number;
+      totalHopsPerSecond: number;
     };
     renderer: JSX.Element;
   };
