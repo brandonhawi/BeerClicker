@@ -3,6 +3,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import Grid from "@mui/material/Grid";
 import Tooltip from "@mui/material/Tooltip";
 import prettyPrintNumber from "../helpers/prettyPrintNumber";
+import { useMemo } from "react";
 
 type Props = {
   className: string;
@@ -23,10 +24,9 @@ const BuildingView = ({
   cost,
   description,
 }: Props) => {
-  const displayedCost = () => {
-    cost = Math.ceil(cost);
-    return prettyPrintNumber(cost);
-  };
+  const displayedCost = useMemo(() => {
+    return prettyPrintNumber(Math.ceil(cost));
+  }, [cost]);
   return (
     <ListItem disablePadding={true} className={className}>
       <Tooltip title={description} placement="right">
@@ -36,7 +36,7 @@ const BuildingView = ({
               {purchaseText} [{beersPerSecond} beers / second]
             </Grid>
             <Grid item xs={12} className={className}>
-              Cost: {displayedCost()}
+              Cost: {displayedCost} beers
             </Grid>
             <Grid item xs={12} className={className}>
               Owned: {owned}
