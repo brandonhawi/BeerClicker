@@ -5,6 +5,7 @@ import Tooltip from "@mui/material/Tooltip";
 import prettyPrintNumber from "../helpers/prettyPrintNumber";
 import { researchBuilding } from "../types/research";
 import { useMemo } from "react";
+import { Typography } from "@mui/material";
 
 type Props = researchBuilding & { id: string };
 
@@ -16,10 +17,12 @@ const ResearchBuildingView = ({
   hopsPerSecond,
   cost,
   id,
+  unlockHint,
 }: Props) => {
   const displayedCost = useMemo(() => {
     return prettyPrintNumber(Math.ceil(cost));
   }, [cost]);
+
   return (
     <ListItem disablePadding={true} className={id}>
       <Tooltip title={description} placement="right">
@@ -34,6 +37,13 @@ const ResearchBuildingView = ({
             <Grid item xs={12} className={id}>
               Owned: {owned}
             </Grid>
+            {!canPurchase && (
+              <Grid item xs={12} className={id}>
+                <Typography variant="subtitle2" textAlign="center">
+                  {unlockHint}
+                </Typography>
+              </Grid>
+            )}
           </Grid>
         </ListItemButton>
       </Tooltip>

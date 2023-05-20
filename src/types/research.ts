@@ -10,4 +10,5 @@ export type researchBuilding = {
   growthRate: number;
   canPurchase: boolean;
   calculateCanPurchase: (entities: entities) => boolean;
+  unlockHint: string;
 };

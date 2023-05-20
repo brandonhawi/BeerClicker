@@ -7,4 +7,5 @@ export type Building = {
   canPurchase: boolean;
   purchaseText: string;
   description: string;
+  unlocked: boolean;
 };

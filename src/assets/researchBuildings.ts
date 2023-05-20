@@ -10,11 +10,12 @@ const researchBuildings: Map<string, researchBuilding> = new Map([
       hopsPerSecond: 1,
       canPurchase: false,
       calculateCanPurchase: (entities: entities) =>
-        entities.totalBuildings.value >= 10,
+        entities.totalBuildings.value >= 3,
       owned: 0,
       cost: 10,
       baseCost: 10,
       growthRate: 1.01,
+      unlockHint: "Unlocks when you own 3 total buildings",
     },
   ],
 ]);

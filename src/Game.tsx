@@ -12,6 +12,7 @@ import {
   updateTotalHops,
   purchaseResearchBuilding,
   updateTotalHopsPerSecond,
+  unlockBuilding,
 } from "./systems";
 import BeerClicker from "./viewComponents/BeerClicker";
 import Buildings from "./entities/Buildings";
@@ -45,6 +46,7 @@ const Game = () => {
         updateAchievements,
         showBeerClickNumber,
         updateCanPurchaseResearchBuilding,
+        unlockBuilding,
       ]}
       entities={{
         //-- Notice that each entity has a unique id (required)
@@ -57,7 +59,11 @@ const Game = () => {
         fps: { value: 60 },
         totalBuildings: { value: 0 },
         buildings: {
-          buildings: { buildingData },
+          buildings: {
+            buildingData,
+          },
+          nextBuildingId: "fellowSapper",
+          nextBuildingName: "Fellow Sapper",
           renderer: <Buildings />,
         },
         beerClicker: {

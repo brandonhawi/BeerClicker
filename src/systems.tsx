@@ -202,8 +202,8 @@ export function updateCanPurchase(entities: entities) {
   return {
     ...entities,
     buildings: {
+      ...entities.buildings,
       buildings: { buildingData: newBuildings },
-      renderer: entities.buildings.renderer,
     },
   };
 }
@@ -241,8 +241,8 @@ export function purchaseBuilding(
     return {
       ...entities,
       buildings: {
+        ...entities.buildings,
         buildings: { buildingData: newBuildings },
-        renderer: entities.buildings.renderer,
       },
       beerClicker: { ...entities.beerClicker, totalBeers: wallet },
     };
@@ -296,6 +296,22 @@ export function purchaseResearchBuilding(
     ...entities,
   };
 }
+
+export const unlockBuilding = (
+  entities: entities,
+  { input }: { input: input[] }
+) => {
+  let wallet = entities.research.research.totalHops;
+  const { payload } = input.find((x) => x.name === "onMouseDown") || {};
+  if (payload && payload.target.id) {
+    const buildingId = payload.target.id;
+    const building = entities.buildings.buildings.buildingData.get(buildingId);
+    if (building && !building.unlocked) {
+      building.unlocked = true;
+    }
+  }
+  return { ...entities };
+};
 
 function calculateNextCost(
   baseCost: number,

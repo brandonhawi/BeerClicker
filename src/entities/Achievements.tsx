@@ -30,14 +30,14 @@ export default function Achievements({ achievements }: Props) {
     if (earned) {
       achievementsRender.push(
         <Tooltip title={`${name}: ${description}`}>
-          <ImageListItem>
+          <ImageListItem key={name}>
             <img src="/beerenomics.png" alt="beerenomics achievements" />
           </ImageListItem>
         </Tooltip>
       );
     } else {
       achievementsRender.push(
-        <ImageListItem>
+        <ImageListItem key={name}>
           <img src="https://placehold.co/50" alt="placeholder" />
         </ImageListItem>
       );

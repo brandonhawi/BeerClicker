@@ -52,7 +52,7 @@ const Research = ({ research }: Props) => {
       <List disablePadding={true} dense={true}>
         <ListItem disablePadding={true} sx={{ marginY: 2 }}>
           <Grid container direction="column">
-            <Grid container xs={12} justifyContent="space-around">
+            <Grid container justifyContent="space-around">
               <Chip label={`${displayedHops} hops`} />
               <Chip label={`${displayedHPS} hops per second`} />
             </Grid>

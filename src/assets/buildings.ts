@@ -13,6 +13,7 @@ const buildingData: Map<string, Building> = new Map([
       purchaseText: "Buy a Home Brew Kit",
       description:
         "An at home kit to passively generate beers while you sap on your couch.",
+      unlocked: true,
     },
   ],
   [
@@ -27,6 +28,7 @@ const buildingData: Map<string, Building> = new Map([
       purchaseText: "Hire a fellow sapper",
       description:
         "This guy says he'll buy you beer, in exchange for beer. Who knew frats were this desperate...",
+      unlocked: false,
     },
   ],
   [
@@ -41,6 +43,7 @@ const buildingData: Map<string, Building> = new Map([
       purchaseText: "Plant a Beer Tree",
       description:
         "You dig a hole, pour beers into it, and hope that you have a good rainy season this year.",
+      unlocked: false,
     },
   ],
   [
@@ -54,6 +57,7 @@ const buildingData: Map<string, Building> = new Map([
       canPurchase: false,
       purchaseText: "Build a Craft Brewery",
       description: "I guess we had to have one normal beer thing in this game.",
+      unlocked: false,
     },
   ],
   [
@@ -68,6 +72,7 @@ const buildingData: Map<string, Building> = new Map([
       purchaseText: "Launch a Hopetship!",
       description:
         "Science has advanced to the point where rockets now use beer as fuel; launch a hopetship to gather hops on new frontiers.",
+      unlocked: false,
     },
   ],
   [
@@ -81,6 +86,7 @@ const buildingData: Map<string, Building> = new Map([
       canPurchase: false,
       purchaseText: "Build a Corporate Office",
       description: "Bureauctratic beers taste just as good.",
+      unlocked: false,
     },
   ],
 ]);

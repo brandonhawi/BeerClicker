@@ -25,6 +25,8 @@ export type entities = {
     buildings: {
       buildingData: Map<string, Building>;
     };
+    nextBuildingName: string;
+    nextBuildingId: string;
     renderer: JSX.Element;
   };
   beerClicker: {
