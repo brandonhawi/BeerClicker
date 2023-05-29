@@ -308,6 +308,19 @@ export const unlockBuilding = (
     const building = entities.buildings.buildings.buildingData.get(buildingId);
     if (building && !building.unlocked) {
       building.unlocked = true;
+      const buildings = Array.from(
+        entities.buildings.buildings.buildingData.entries()
+      );
+      const nextBuilding = buildings.find((building) => {
+        return !building[1].unlocked;
+      });
+      if (nextBuilding) {
+        entities.buildings.nextBuildingId = nextBuilding[0];
+        entities.buildings.nextBuildingName = nextBuilding[1].name;
+      } else {
+        entities.buildings.nextBuildingId = undefined;
+        entities.buildings.nextBuildingName = undefined;
+      }
     }
   }
   return { ...entities };

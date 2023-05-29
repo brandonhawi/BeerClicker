@@ -4,6 +4,7 @@ const buildingData: Map<string, Building> = new Map([
   [
     "brewKit",
     {
+      name: "Brew Kit",
       owned: 0,
       beersPerSecond: 0.1,
       baseCost: 10,
@@ -19,6 +20,7 @@ const buildingData: Map<string, Building> = new Map([
   [
     "fellowSapper",
     {
+      name: "Fellow Sapper",
       owned: 0,
       beersPerSecond: 1,
       baseCost: 100,
@@ -34,6 +36,7 @@ const buildingData: Map<string, Building> = new Map([
   [
     "beerTree",
     {
+      name: "Beer Tree",
       owned: 0,
       beersPerSecond: 10,
       baseCost: 1000,
@@ -49,6 +52,7 @@ const buildingData: Map<string, Building> = new Map([
   [
     "craftBrewery",
     {
+      name: "Craft Brewery",
       owned: 0,
       beersPerSecond: 100,
       baseCost: 10000,
@@ -63,6 +67,7 @@ const buildingData: Map<string, Building> = new Map([
   [
     "hopetship",
     {
+      name: "Hopetship",
       owned: 0,
       beersPerSecond: 1000,
       baseCost: 100000,
@@ -78,6 +83,7 @@ const buildingData: Map<string, Building> = new Map([
   [
     "corporateOffice",
     {
+      name: "Corporate Office",
       owned: 0,
       beersPerSecond: 10000,
       baseCost: 1000000,

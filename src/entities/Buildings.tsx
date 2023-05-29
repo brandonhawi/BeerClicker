@@ -65,11 +65,13 @@ const Buildings = ({ buildings, nextBuildingId, nextBuildingName }: Props) => {
     >
       <List disablePadding={true} dense={true}>
         {buildingsRender}
-        <ListItem disablePadding={true}>
-          <Grid container justifyContent="center">
-            <Button id={nextBuildingId}>Unlock {nextBuildingName}</Button>
-          </Grid>
-        </ListItem>
+        {nextBuildingId && (
+          <ListItem disablePadding={true}>
+            <Grid container justifyContent="center">
+              <Button id={nextBuildingId}>Unlock {nextBuildingName}</Button>
+            </Grid>
+          </ListItem>
+        )}
       </List>
     </Drawer>
   );

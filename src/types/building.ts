@@ -1,4 +1,5 @@
 export type Building = {
+  name: string;
   owned: number;
   beersPerSecond: number;
   baseCost: number;
