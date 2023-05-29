@@ -18,6 +18,7 @@ const ResearchBuildingView = ({
   cost,
   id,
   unlockHint,
+  showUnlockHint,
 }: Props) => {
   const displayedCost = useMemo(() => {
     return prettyPrintNumber(Math.ceil(cost));
@@ -37,7 +38,7 @@ const ResearchBuildingView = ({
             <Grid item xs={12} className={id}>
               Owned: {owned}
             </Grid>
-            {!canPurchase && (
+            {showUnlockHint && (
               <Grid item xs={12} className={id}>
                 <Typography variant="subtitle2" textAlign="center">
                   {unlockHint}

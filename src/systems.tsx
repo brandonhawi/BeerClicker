@@ -22,13 +22,13 @@ export function updateTotalHops(entities: entities) {
 
 export function updateCanPurchaseResearchBuilding(entities: entities) {
   const researchBuildings = entities.research.research.researchBuildings;
+  const totalBeers = entities.beerClicker.totalBeers;
   researchBuildings.forEach((researchBuilding) => {
-    if (
-      !researchBuilding.canPurchase &&
-      researchBuilding.calculateCanPurchase(entities)
-    ) {
-      researchBuilding.canPurchase = true;
-    }
+    researchBuilding.canPurchase =
+      canPurchase(totalBeers, researchBuilding.cost) &&
+      researchBuilding.calculateCanPurchase(entities);
+    researchBuilding.showUnlockHint =
+      !researchBuilding.calculateCanPurchase(entities);
   });
   return { ...entities };
 }

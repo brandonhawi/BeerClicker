@@ -11,4 +11,5 @@ export type researchBuilding = {
   canPurchase: boolean;
   calculateCanPurchase: (entities: entities) => boolean;
   unlockHint: string;
+  showUnlockHint: boolean;
 };

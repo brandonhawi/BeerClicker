@@ -16,6 +16,7 @@ const researchBuildings: Map<string, researchBuilding> = new Map([
       baseCost: 10,
       growthRate: 1.01,
       unlockHint: "Unlocks when you own 3 total buildings",
+      showUnlockHint: true,
     },
   ],
 ]);
