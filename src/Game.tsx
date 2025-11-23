@@ -58,7 +58,7 @@ const Game = () => {
         beersPerSecond: { value: 0 },
         hopsPerSecond: { value: 0 },
         beersPerClick: { value: 1 },
-        lastFrameTime: { value: performance.now() },
+        lastFrameTime: { value: 0 },
         fps: { value: 60 },
         totalBuildings: { value: 0 },
         buildings: {

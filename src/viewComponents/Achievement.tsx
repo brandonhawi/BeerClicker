@@ -15,7 +15,7 @@ export default function AchievementView({ name, hint }: Props) {
         </Badge>
         {name}
       </Typography>
-      <Typography component="em">"{hint}"</Typography>
+      <Typography component="em">&quot;{hint}&quot;</Typography>
     </Paper>
   );
 }

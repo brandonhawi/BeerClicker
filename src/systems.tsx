@@ -301,7 +301,7 @@ export const unlockBuilding = (
   entities: entities,
   { input }: { input: input[] }
 ) => {
-  let wallet = entities.research.research.totalHops;
+  const wallet = entities.research.research.totalHops;
   const { payload } = input.find((x) => x.name === "onMouseDown") || {};
   if (payload && payload.target.id) {
     const buildingId = payload.target.id;

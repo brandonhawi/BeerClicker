@@ -4,10 +4,10 @@ declare module "react-game-engine" {
     systems: { (entities: EntityType, { input }: { input: InputType[] }) }[];
     entities: EntityType;
     renderer?: { (entities, screen): void };
-    timer?: {};
+    timer?: object;
     running?: boolean;
     onEvent?: { (): void };
-    style?: {};
+    style?: object;
     children?: JSX.Element;
   };
 
