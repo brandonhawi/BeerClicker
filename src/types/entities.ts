@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { Achievement } from "./achievement";
 import { Building } from "./building";
 import { researchBuilding } from "./research";
@@ -27,19 +29,19 @@ export type entities = {
     };
     nextBuildingName?: string;
     nextBuildingId?: string;
-    renderer: JSX.Element;
+    renderer: ReactNode;
   };
   beerClicker: {
     lifetimeBeers: number;
     totalBeers: number;
     totalBeersPerSecond: number;
-    renderer: JSX.Element;
+    renderer: ReactNode;
   };
   achievements: {
     achievements: {
       achievementData: Map<string, Achievement>;
     };
-    renderer: JSX.Element;
+    renderer: ReactNode;
   };
   research: {
     research: {
@@ -48,6 +50,6 @@ export type entities = {
       lifetimeHops: number;
       totalHopsPerSecond: number;
     };
-    renderer: JSX.Element;
+    renderer: ReactNode;
   };
 };

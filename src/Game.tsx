@@ -1,95 +1,49 @@
 "use client";
 
-import "regenerator-runtime/runtime";
-import { GameEngine } from "react-game-engine";
-import {
-  getFps,
-  updateCanPurchase,
-  updateTotalBeers,
-  updateTotalBeersPerSecond,
-  purchaseBuilding,
-  updateTotalBuildings,
-  updateAchievements,
-  showBeerClickNumber,
-  updateCanPurchaseResearchBuilding,
-  updateTotalHops,
-  purchaseResearchBuilding,
-  updateTotalHopsPerSecond,
-  unlockBuilding,
-} from "./systems";
+import { useGameLoop } from "./hooks/useGameLoop";
+import { useAchievementWatcher } from "./hooks/useAchievementWatcher";
+import { useHydration } from "./hooks/useHydration";
 import BeerClicker from "./viewComponents/BeerClicker";
 import Buildings from "./entities/Buildings";
-import buildingData from "./assets/buildings";
 import Achievements from "./entities/Achievements";
-import achievementData from "./assets/achievements";
-import { entities } from "./types/entities";
-import { input } from "./types/input";
-import researchBuildings from "./assets/researchBuildings";
 import Research from "./entities/Research";
 
 const Game = () => {
+  // Initialize game hooks
+  useGameLoop();
+  useAchievementWatcher();
+  const isHydrated = useHydration();
+
+  // Show loading until hydrated to prevent SSR mismatch
+  if (!isHydrated) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "100vh",
+        }}
+      >
+        Loading...
+      </div>
+    );
+  }
+
   return (
-    <GameEngine<entities, input>
+    <div
       style={{
         display: "flex",
         outline: "none",
         flex: "",
         alignItems: "start",
       }}
-      systems={[
-        updateTotalHops,
-        updateCanPurchase,
-        getFps,
-        updateTotalBeers,
-        updateTotalBeersPerSecond,
-        updateTotalHopsPerSecond,
-        purchaseBuilding,
-        purchaseResearchBuilding,
-        updateTotalBuildings,
-        updateAchievements,
-        showBeerClickNumber,
-        updateCanPurchaseResearchBuilding,
-        unlockBuilding,
-      ]}
-      entities={{
-        //-- Notice that each entity has a unique id (required)
-        //-- and a renderer property (optional). If no renderer
-        //-- is supplied with the entity - it won't get displayed.
-        beersPerSecond: { value: 0 },
-        hopsPerSecond: { value: 0 },
-        beersPerClick: { value: 1 },
-        lastFrameTime: { value: 0 },
-        fps: { value: 60 },
-        totalBuildings: { value: 0 },
-        buildings: {
-          buildings: {
-            buildingData,
-          },
-          nextBuildingId: "fellowSapper",
-          nextBuildingName: "Fellow Sapper",
-          renderer: <Buildings />,
-        },
-        beerClicker: {
-          lifetimeBeers: 0,
-          totalBeers: 0,
-          totalBeersPerSecond: 0,
-          renderer: <BeerClicker />,
-        },
-        achievements: {
-          achievements: { achievementData },
-          renderer: <Achievements />,
-        },
-        research: {
-          research: {
-            researchBuildings,
-            totalHops: 0,
-            lifetimeHops: 0,
-            totalHopsPerSecond: 0,
-          },
-          renderer: <Research />,
-        },
-      }}
-    />
+    >
+      <BeerClicker />
+      <Buildings />
+      <Achievements />
+      <Research />
+    </div>
   );
 };
 

@@ -7,6 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 BeerClicker is an idle game built with Next.js 16 and React 18. The game is a beer-themed clicker where players accumulate beers by clicking and purchasing buildings that generate beers automatically. Players can also unlock a research system that generates "hops" currency to unlock new buildings, and earn achievements for reaching milestones.
 
 **Tech Stack:**
+
 - Next.js 16 with App Router and Turbopack
 - React 18.3.1
 - TypeScript 5.9.3
@@ -39,7 +40,7 @@ Before considering any task complete, ALL of the following criteria must be met:
 1. **Tests Pass**: All tests must be updated to reflect changes and must pass successfully
 2. **Lint Clean**: `npm run lint` must complete with zero errors
 3. **Build Success**: `npm run build` must complete without any errors
-4. **Runtime Clean**: Run `npm run dev` and open the application in a browser - there must be no runtime errors in the browser console
+4. **Runtime Clean**: Run `npm run dev` to start the app in dev mode. Use the playwright mcp to validate that it renders correctly.
 
 These checks are non-negotiable. If any criterion fails, the work is not complete.
 

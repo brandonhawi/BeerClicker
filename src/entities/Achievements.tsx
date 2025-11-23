@@ -10,35 +10,38 @@ import {
   Tooltip,
 } from "@mui/material";
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
-import { useState } from "react";
-import { Achievement } from "../types/achievement";
+import { useState, type ReactNode } from "react";
+import { useAchievements } from "../store/selectors";
+import Image from "next/image";
 
-type Props = {
-  achievements?: {
-    achievementData: Map<string, Achievement>;
-  };
-};
-
-export default function Achievements({ achievements }: Props) {
+export default function Achievements() {
   const [achievementsShown, setAchievementsShown] = useState(false);
-  if (!achievements) {
-    return null;
-  }
-  const { achievementData } = achievements;
-  const achievementsRender: JSX.Element[] = [];
-  achievementData.forEach(({ earned, name, description }) => {
+  const achievements = useAchievements();
+
+  const achievementsRender: ReactNode[] = [];
+  Object.values(achievements).forEach(({ earned, name, description }) => {
     if (earned) {
       achievementsRender.push(
-        <Tooltip title={`${name}: ${description}`}>
-          <ImageListItem key={name}>
-            <img src="/beerenomics.png" alt="beerenomics achievements" />
+        <Tooltip key={name} title={`${name}: ${description}`}>
+          <ImageListItem>
+            <Image
+              src="/beerenomics.png"
+              alt="beerenomics achievements"
+              width={50}
+              height={50}
+            />
           </ImageListItem>
         </Tooltip>
       );
     } else {
       achievementsRender.push(
         <ImageListItem key={name}>
-          <img src="https://placehold.co/50" alt="placeholder" />
+          <Image
+            src="https://placehold.co/50"
+            alt="placeholder"
+            width={50}
+            height={50}
+          />
         </ImageListItem>
       );
     }

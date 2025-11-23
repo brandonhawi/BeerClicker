@@ -4,9 +4,11 @@ import Grid from "@mui/material/Grid";
 import Tooltip from "@mui/material/Tooltip";
 import prettyPrintNumber from "../helpers/prettyPrintNumber";
 import { useMemo } from "react";
+import { useGameStore } from "../store/gameStore";
 
 type Props = {
-  className: string;
+  id: string;
+  name: string;
   canPurchase: boolean;
   purchaseText: string;
   beersPerSecond: number;
@@ -16,7 +18,7 @@ type Props = {
 };
 
 const BuildingView = ({
-  className,
+  id,
   canPurchase,
   purchaseText,
   beersPerSecond,
@@ -24,21 +26,34 @@ const BuildingView = ({
   cost,
   description,
 }: Props) => {
+  const purchaseBuilding = useGameStore((state) => state.purchaseBuilding);
+
   const displayedCost = useMemo(() => {
     return prettyPrintNumber(Math.ceil(cost));
   }, [cost]);
+
+  const handleClick = () => {
+    if (canPurchase) {
+      purchaseBuilding(id);
+    }
+  };
+
   return (
-    <ListItem disablePadding={true} className={className}>
+    <ListItem disablePadding={true} className={id}>
       <Tooltip title={description} placement="right">
-        <ListItemButton disabled={!canPurchase} className={className}>
-          <Grid container direction="column" className={className}>
-            <Grid item xs={12} className={className}>
+        <ListItemButton
+          disabled={!canPurchase}
+          className={id}
+          onClick={handleClick}
+        >
+          <Grid container direction="column" className={id}>
+            <Grid size={12} className={id}>
               {purchaseText} [{beersPerSecond} beers / second]
             </Grid>
-            <Grid item xs={12} className={className}>
+            <Grid size={12} className={id}>
               Cost: {displayedCost} beers
             </Grid>
-            <Grid item xs={12} className={className}>
+            <Grid size={12} className={id}>
               Owned: {owned}
             </Grid>
           </Grid>
