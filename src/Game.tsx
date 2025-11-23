@@ -1,3 +1,5 @@
+"use client";
+
 import { GameEngine } from "react-game-engine";
 import {
   getFps,

@@ -1,4 +1,4 @@
-import { ReactComponent as SVG } from "../beer.svg";
+import SVG from "../beer.svg";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import Chip from "@mui/material/Chip";
