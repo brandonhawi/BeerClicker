@@ -1,9 +1,6 @@
 import type { ReactNode } from "react";
 
-import Drawer from "@mui/material/Drawer";
-import List from "@mui/material/List";
 import ResearchBuildingView from "./ResearchBuildingView";
-import { Chip, Grid, ListItem } from "@mui/material";
 import prettyPrintNumber from "../helpers/prettyPrintNumber";
 import { useResearchBuildings, useHops, useHopsPerSecond } from "../store/selectors";
 import { useGameStore } from "../store/gameStore";
@@ -39,31 +36,23 @@ const Research = () => {
   });
 
   return (
-    <Drawer
-      variant="persistent"
-      anchor="right"
-      open={true}
-      sx={{
-        width: 240,
-        flexShrink: 0,
-        "& .MuiDrawer-paper": {
-          width: 240,
-          boxSizing: "border-box",
-        },
-      }}
-    >
-      <List disablePadding={true} dense={true}>
-        <ListItem disablePadding={true} sx={{ marginY: 2 }}>
-          <Grid container direction="column">
-            <Grid container justifyContent="space-around">
-              <Chip label={`${displayedHops} hops`} />
-              <Chip label={`${displayedHPS} hops per second`} />
-            </Grid>
-          </Grid>
-        </ListItem>
+    <aside className="fixed right-0 top-0 h-full w-60 flex-shrink-0 bg-white border-l border-gray-200 overflow-y-auto">
+      <ul className="list-none p-0 m-0">
+        <li className="my-4">
+          <div className="flex flex-col gap-2">
+            <div className="flex justify-around">
+              <span className="px-3 py-1 bg-primary text-white rounded-full text-sm select-none">
+                {displayedHops} hops
+              </span>
+              <span className="px-3 py-1 bg-primary text-white rounded-full text-sm select-none">
+                {displayedHPS} hops per second
+              </span>
+            </div>
+          </div>
+        </li>
         {researchBuildingsRender}
-      </List>
-    </Drawer>
+      </ul>
+    </aside>
   );
 };
 

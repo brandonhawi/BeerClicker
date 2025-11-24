@@ -1,10 +1,6 @@
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import Grid from "@mui/material/Grid";
-import Tooltip from "@mui/material/Tooltip";
+import Tooltip from "../components/Tooltip";
 import prettyPrintNumber from "../helpers/prettyPrintNumber";
 import { useMemo } from "react";
-import { Typography } from "@mui/material";
 import { useGameStore } from "../store/gameStore";
 
 type Props = {
@@ -43,34 +39,28 @@ const ResearchBuildingView = ({
   };
 
   return (
-    <ListItem disablePadding={true} className={id}>
+    <li className={id}>
       <Tooltip title={description} placement="right">
-        <ListItemButton
+        <button
           disabled={!canPurchase}
-          className={id}
+          className={`${id} w-full text-left px-4 py-2 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors`}
           onClick={handleClick}
         >
-          <Grid container direction="column" className={id}>
-            <Grid size={12} className={id}>
+          <div className={`${id} flex flex-col`}>
+            <div className={id}>
               {name} [{hopsPerSecond} hops / second]
-            </Grid>
-            <Grid size={12} className={id}>
-              Cost: {displayedCost} hops
-            </Grid>
-            <Grid size={12} className={id}>
-              Owned: {owned}
-            </Grid>
+            </div>
+            <div className={id}>Cost: {displayedCost} hops</div>
+            <div className={id}>Owned: {owned}</div>
             {showUnlockHint && (
-              <Grid size={12} className={id}>
-                <Typography variant="subtitle2" textAlign="center">
-                  {unlockHint}
-                </Typography>
-              </Grid>
+              <div className={`${id} text-sm text-center text-gray-600`}>
+                {unlockHint}
+              </div>
             )}
-          </Grid>
-        </ListItemButton>
+          </div>
+        </button>
       </Tooltip>
-    </ListItem>
+    </li>
   );
 };
 
