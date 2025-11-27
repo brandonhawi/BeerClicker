@@ -1,66 +1,58 @@
-import Drawer from "@mui/material/Drawer";
-import List from "@mui/material/List";
-import { researchBuilding } from "../types/research";
+import type { ReactNode } from "react";
+
 import ResearchBuildingView from "./ResearchBuildingView";
-import { Chip, Grid, ListItem } from "@mui/material";
 import prettyPrintNumber from "../helpers/prettyPrintNumber";
+import { useResearchBuildings, useHops, useHopsPerSecond } from "../store/selectors";
+import { useGameStore } from "../store/gameStore";
+import { canPurchaseResearch, shouldShowUnlockHint } from "../game-logic/researchRules";
 
-type Props = {
-  research?: {
-    researchBuildings: Map<string, researchBuilding>;
-    totalHops: number;
-    totalHopsPerSecond: number;
-  };
-};
+const Research = () => {
+  const researchBuildings = useResearchBuildings();
+  const totalHops = useHops();
+  const totalHopsPerSecond = useHopsPerSecond();
+  const state = useGameStore();
 
-const Research = ({ research }: Props) => {
-  if (!research) {
-    return null;
-  }
-  const { researchBuildings, totalHops, totalHopsPerSecond } = research;
-
-  const displayedHops = prettyPrintNumber(Math.floor(totalHops!));
+  const displayedHops = prettyPrintNumber(Math.floor(totalHops));
   const displayedHPS = prettyPrintNumber(
-    Math.round(totalHopsPerSecond! * 10) / 10
+    Math.round(totalHopsPerSecond * 10) / 10
   );
 
-  const researchBuildingsRender: JSX.Element[] = [];
-  researchBuildings.forEach((researchBuilding, researchBuildingId) => {
+  const researchBuildingsRender: ReactNode[] = [];
+  Object.entries(researchBuildings).forEach(([researchBuildingId, researchBuilding]) => {
     researchBuildingsRender.push(
       <ResearchBuildingView
-        id={researchBuildingId}
         key={researchBuildingId}
-        {...researchBuilding}
+        id={researchBuildingId}
+        name={researchBuilding.name}
+        description={researchBuilding.description}
+        hopsPerSecond={researchBuilding.hopsPerSecond}
+        owned={researchBuilding.owned}
+        cost={researchBuilding.cost}
+        unlockHint={researchBuilding.unlockHint}
+        canPurchase={canPurchaseResearch(researchBuilding, state)}
+        showUnlockHint={shouldShowUnlockHint(researchBuilding, state)}
       />
     );
   });
 
   return (
-    <Drawer
-      variant="persistent"
-      anchor="right"
-      open={true}
-      sx={{
-        width: 240,
-        flexShrink: 0,
-        "& .MuiDrawer-paper": {
-          width: 240,
-          boxSizing: "border-box",
-        },
-      }}
-    >
-      <List disablePadding={true} dense={true}>
-        <ListItem disablePadding={true} sx={{ marginY: 2 }}>
-          <Grid container direction="column">
-            <Grid container justifyContent="space-around">
-              <Chip label={`${displayedHops} hops`} />
-              <Chip label={`${displayedHPS} hops per second`} />
-            </Grid>
-          </Grid>
-        </ListItem>
+    <aside className="fixed right-0 top-0 h-full w-60 flex-shrink-0 bg-white border-l border-gray-200 overflow-y-auto">
+      <ul className="list-none p-0 m-0">
+        <li className="my-4">
+          <div className="flex flex-col gap-2">
+            <div className="flex justify-around">
+              <span className="px-3 py-1 bg-primary text-white rounded-full text-sm select-none">
+                {displayedHops} hops
+              </span>
+              <span className="px-3 py-1 bg-primary text-white rounded-full text-sm select-none">
+                {displayedHPS} hops per second
+              </span>
+            </div>
+          </div>
+        </li>
         {researchBuildingsRender}
-      </List>
-    </Drawer>
+      </ul>
+    </aside>
   );
 };
 

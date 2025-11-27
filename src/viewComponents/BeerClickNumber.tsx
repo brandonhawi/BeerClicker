@@ -1,7 +1,7 @@
 export default function BeerClickNumber() {
   return (
     <span
-      id="beerClickNumber"
+      id="beer-click-number-template"
       className="visible"
       style={{
         position: "absolute",
@@ -10,6 +10,7 @@ export default function BeerClickNumber() {
         fontWeight: "800",
         fontSize: "20px",
         textShadow: "1px 1px 2px black",
+        display: "none",
       }}
     ></span>
   );

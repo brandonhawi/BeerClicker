@@ -1,79 +1,59 @@
-import Drawer from "@mui/material/Drawer";
-import List from "@mui/material/List";
+import type { ReactNode } from "react";
+
 import BuildingView from "./BuildingView";
-import { Building } from "../types/building";
-import { Button, Grid, ListItem } from "@mui/material";
+import { useBuildings, useBeers, useNextBuildingId, useNextBuildingName } from "../store/selectors";
+import { useGameStore } from "../store/gameStore";
+import { canPurchase } from "../game-logic/buildingRules";
 
-type Props = {
-  buildings?: {
-    buildingData: Map<string, Building>;
-  };
-  nextBuildingName?: string;
-  nextBuildingId?: string;
-};
+const Buildings = () => {
+  const buildings = useBuildings();
+  const totalBeers = useBeers();
+  const nextBuildingId = useNextBuildingId();
+  const nextBuildingName = useNextBuildingName();
+  const unlockBuilding = useGameStore((state) => state.unlockBuilding);
 
-const Buildings = ({ buildings, nextBuildingId, nextBuildingName }: Props) => {
-  if (!buildings) {
-    return null;
-  }
-  const { buildingData } = buildings;
-
-  const buildingsRender: JSX.Element[] = [];
-  buildingData.forEach(
-    (
-      {
-        owned,
-        beersPerSecond,
-        cost,
-        canPurchase,
-        purchaseText,
-        description,
-        unlocked,
-      },
-      buildingId
-    ) => {
-      if (unlocked) {
-        buildingsRender.push(
-          <BuildingView
-            key={buildingId}
-            className={buildingId}
-            owned={owned}
-            beersPerSecond={beersPerSecond}
-            cost={cost}
-            canPurchase={canPurchase}
-            purchaseText={purchaseText}
-            description={description}
-          />
-        );
-      }
+  const buildingsRender: ReactNode[] = [];
+  Object.entries(buildings).forEach(([buildingId, building]) => {
+    if (building.unlocked) {
+      buildingsRender.push(
+        <BuildingView
+          key={buildingId}
+          id={buildingId}
+          name={building.name}
+          owned={building.owned}
+          beersPerSecond={building.beersPerSecond}
+          cost={building.cost}
+          canPurchase={canPurchase(building, totalBeers)}
+          purchaseText={building.purchaseText}
+          description={building.description}
+        />
+      );
     }
-  );
+  });
+
+  const handleUnlockClick = () => {
+    if (nextBuildingId) {
+      unlockBuilding(nextBuildingId);
+    }
+  };
 
   return (
-    <Drawer
-      variant="persistent"
-      anchor="left"
-      open={true}
-      sx={{
-        width: 240,
-        flexShrink: 0,
-        "& .MuiDrawer-paper": {
-          width: 240,
-          boxSizing: "border-box",
-        },
-      }}
-    >
-      <List disablePadding={true} dense={true}>
+    <aside className="fixed left-0 top-0 h-full w-60 flex-shrink-0 bg-white border-r border-gray-200 overflow-y-auto">
+      <ul className="list-none p-0 m-0">
         {buildingsRender}
         {nextBuildingId && (
-          <ListItem disablePadding={true}>
-            <Grid container justifyContent="center">
-              <Button id={nextBuildingId}>Unlock {nextBuildingName}</Button>
-            </Grid>
-          </ListItem>
+          <li className="flex justify-center p-2">
+            <button
+              id={nextBuildingId}
+              onClick={handleUnlockClick}
+              className="px-4 py-2 bg-primary text-white rounded hover:bg-primary-dark transition-colors"
+            >
+              Unlock {nextBuildingName}
+            </button>
+          </li>
         )}
-      </List>
-    </Drawer>
+      </ul>
+    </aside>
   );
 };
 

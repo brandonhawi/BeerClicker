@@ -1,54 +1,66 @@
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import Grid from "@mui/material/Grid";
-import Tooltip from "@mui/material/Tooltip";
+import Tooltip from "../components/Tooltip";
 import prettyPrintNumber from "../helpers/prettyPrintNumber";
-import { researchBuilding } from "../types/research";
 import { useMemo } from "react";
-import { Typography } from "@mui/material";
+import { useGameStore } from "../store/gameStore";
 
-type Props = researchBuilding & { id: string };
+type Props = {
+  id: string;
+  name: string;
+  description: string;
+  canPurchase: boolean;
+  owned: number;
+  hopsPerSecond: number;
+  cost: number;
+  unlockHint: string;
+  showUnlockHint: boolean;
+};
 
 const ResearchBuildingView = ({
+  id,
   name,
   description,
   canPurchase,
   owned,
   hopsPerSecond,
   cost,
-  id,
   unlockHint,
   showUnlockHint,
 }: Props) => {
+  const purchaseResearchBuilding = useGameStore((state) => state.purchaseResearchBuilding);
+
   const displayedCost = useMemo(() => {
     return prettyPrintNumber(Math.ceil(cost));
   }, [cost]);
 
+  const handleClick = () => {
+    if (canPurchase) {
+      purchaseResearchBuilding(id);
+    }
+  };
+
   return (
-    <ListItem disablePadding={true} className={id}>
+    <li className={id}>
       <Tooltip title={description} placement="right">
-        <ListItemButton disabled={!canPurchase} className={id}>
-          <Grid container direction="column" className={id}>
-            <Grid item xs={12} className={id}>
+        <button
+          disabled={!canPurchase}
+          className={`${id} w-full text-left px-4 py-2 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors`}
+          onClick={handleClick}
+        >
+          <div className={`${id} flex flex-col`}>
+            <div className={id}>
               {name} [{hopsPerSecond} hops / second]
-            </Grid>
-            <Grid item xs={12} className={id}>
-              Cost: {displayedCost} beers
-            </Grid>
-            <Grid item xs={12} className={id}>
-              Owned: {owned}
-            </Grid>
+            </div>
+            <div className={id}>Cost: {displayedCost} hops</div>
+            <div className={id}>Owned: {owned}</div>
             {showUnlockHint && (
-              <Grid item xs={12} className={id}>
-                <Typography variant="subtitle2" textAlign="center">
-                  {unlockHint}
-                </Typography>
-              </Grid>
+              <div className={`${id} text-sm text-center text-gray-600`}>
+                {unlockHint}
+              </div>
             )}
-          </Grid>
-        </ListItemButton>
+          </div>
+        </button>
       </Tooltip>
-    </ListItem>
+    </li>
   );
 };
 
