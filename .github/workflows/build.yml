@@ -1,11 +1,11 @@
-# CI workflow that runs on PRs to main branch
+# CI workflow that runs on PRs to master branch
 # Ensures code quality by running build, tests, and linting
 
 name: CI
 
 on:
   pull_request:
-    branches: [ main ]
+    branches: [ master ]
 
 jobs:
   ci:
