@@ -61,30 +61,6 @@ Six building types with exponential cost scaling:
 - **Achievements**: 6 achievements with toast notifications for milestones
 - **Auto-save**: Game state saves every 10 seconds to localStorage
 
-## Project Structure
-
-```
-src/
-├── app/                    # Next.js App Router pages
-├── game-logic/             # Pure business logic functions
-├── store/                  # Zustand state management
-│   ├── gameStore.ts        # Main game store
-│   └── selectors.ts        # Optimized selector hooks
-├── entities/               # Game feature UI components
-│   ├── Buildings.tsx
-│   ├── Research.tsx
-│   └── Achievements.tsx
-├── viewComponents/         # Core UI components
-│   └── BeerClicker.tsx     # Main game view
-├── hooks/                  # Custom React hooks
-│   ├── useGameLoop.ts      # Custom requestAnimationFrame loop
-│   ├── useGameLoop.ts      # Achievement tracking
-│   └── useHydration.ts     # SSR hydration handling
-├── types/                  # TypeScript definitions
-├── assets/                 # Game data and SVGs
-└── test/                   # Test utilities and setup
-```
-
 ## Development Notes
 
 ### Game Loop
