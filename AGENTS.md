@@ -18,7 +18,7 @@ BeerClicker is an idle game built with Next.js 16 and React 19. The game is a be
 - react-hot-toast 2.6.0 for notifications
 - Vitest 4.0.13 for testing
 
-**Recently Migrated:** This project was recently migrated from Create React App to Next.js 16 with React 19. It also transitioned from Material UI to Tailwind CSS for styling. The README.md still contains outdated CRA documentation.
+**Recently Migrated:** This project was recently migrated from Create React App to Next.js 16 with React 19. It also transitioned from Material UI to Tailwind CSS for styling.
 
 ## Development Commands
 
