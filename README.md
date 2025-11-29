@@ -1,75 +1,98 @@
 # BeerClicker [![Build App](https://github.com/brandonhawi/BeerClicker/actions/workflows/build.yml/badge.svg)](https://github.com/brandonhawi/BeerClicker/actions/workflows/build.yml)
 
-This is an idle game made with React and specifically the [react-game-engine library](https://github.com/bberak/react-game-engine).
+A beer-themed idle game built with Next.js 16 and React 19. Click to earn beers, purchase buildings for passive income, unlock research technologies, and achieve milestones!
 
+## Quick Start
 
-# Getting Started with Create React App
+```bash
+# Install dependencies
+npm install
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Start development server (uses Turbopack)
+npm run dev
 
-## Available Scripts
+# Open http://localhost:3000 in your browser
+```
 
-In the project directory, you can run:
+## Tech Stack
 
-### `npm start`
+- **Framework**: Next.js 16.0.3 with App Router
+- **UI Library**: React 19.2.0
+- **Language**: TypeScript 5.9.3
+- **Styling**: Tailwind CSS 4.1.17 with PostCSS
+- **State Management**: Zustand 5.0.8 (with devtools, persist, subscribeWithSelector, immer)
+- **Testing**: Vitest 4.0.13
+- **Notifications**: react-hot-toast 2.6.0
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Available Commands
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+```bash
+# Development
+npm run dev              # Start dev server with Turbopack
+npm run build            # Build for production (uses Webpack)
+npm start                # Run production build locally
 
-### `npm test`
+# Code Quality
+npm run lint             # Run ESLint
+npm run test             # Run tests once
+npm run test:watch       # Run tests in watch mode
+npm run test:coverage    # Run tests with coverage report
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Game Features
 
-### `npm run build`
+### Resources
+- **Beers**: Primary currency earned by clicking and building production
+- **Hops**: Secondary currency unlocked through research
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Buildings
+Six building types with exponential cost scaling:
+- Brew Kit
+- Fellow Sapper
+- Beer Tree
+- Craft Brewery
+- Hopetship
+- Corporate Office
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Gameplay Systems
+- **Clicking**: Click the beer SVG to earn beers instantly
+- **Production**: Buildings generate beers passively (frame-rate independent)
+- **Research**: Unlock new buildings and upgrades (unlocks at 3 total buildings owned)
+- **Achievements**: 6 achievements with toast notifications for milestones
+- **Auto-save**: Game state saves every 10 seconds to localStorage
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Development Notes
 
-### `npm run eject`
+### Game Loop
+- Custom implementation using `requestAnimationFrame` (not a library)
+- Frame-rate independent calculations using delta time
+- 60-frame rolling average for FPS tracking
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### State Management
+- Zustand with localStorage persistence
+- Automatic hydration to prevent SSR mismatches
+- Immer middleware for immutable state updates
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Testing
+- Minimal test coverage (sanity test only)
+- Mock localStorage, Audio, and window.matchMedia in test setup
+- Test framework: Vitest with happy-dom environment
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Future Features
+- Audio implementation (files present but deferred)
+- Additional achievements and progression systems
+- UI/UX enhancements
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Browser Support
 
-## Learn More
+- Chrome (latest)
+- Firefox (latest)
+- Safari (latest)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## License
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Private project
 
-### Code Splitting
+## Getting Help
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+For development guidance, see [AGENTS.md](./AGENTS.md) or [CLAUDE.md](./CLAUDE.md) for detailed architecture and testing information.

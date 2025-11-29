@@ -11,14 +11,14 @@ BeerClicker is an idle game built with Next.js 16 and React 19. The game is a be
 - Next.js 16.0.3 with App Router and Turbopack (dev) / Webpack (production builds)
 - React 19.2.0
 - TypeScript 5.9.3
-- Material UI 7.3.5 with Emotion styling
+- Tailwind CSS 4.1.17 with PostCSS for styling
 - Zustand 5.0.8 for state management (with devtools, persist, subscribeWithSelector, and immer middleware)
 - Immer 11.0.0 for immutable state updates
 - Custom game loop using requestAnimationFrame (frame-rate independent)
 - react-hot-toast 2.6.0 for notifications
 - Vitest 4.0.13 for testing
 
-**Recently Migrated:** This project was recently migrated from Create React App to Next.js 16 with React 19 and Material UI v7 upgrades. The README.md still contains outdated CRA documentation.
+**Recently Migrated:** This project was recently migrated from Create React App to Next.js 16 with React 19. It also transitioned from Material UI to Tailwind CSS for styling.
 
 ## Development Commands
 
